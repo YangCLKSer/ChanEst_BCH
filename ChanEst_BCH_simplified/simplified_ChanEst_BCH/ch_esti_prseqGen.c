@@ -1,7 +1,8 @@
 #include "typedefs.h"
 #include "datadefs.h"
-#include "de2bi.h"
+#include "Array_Ctrl.h"
 
+void de2bi(ARRAY_int32* out, int input, int bit_num, int type);
 void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
 {
 	int Nc = 1600;
@@ -13,7 +14,7 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     C->size[0] = 1;
     loop_ub = (int)(lenC);
     C->size[1] = loop_ub;
-    EnsureCapacity_real(C, i);
+    EnsureCapacity_int32(C, i);
     for (i = 0; i < loop_ub; i++) {
         C->data[i] = 0.0;
     }
@@ -25,7 +26,7 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     x1->size[0] = 1;
     loop_ub = (int)(lenGold);
     x1->size[1] = loop_ub;
-    EnsureCapacity_real(x1, i);
+    EnsureCapacity_int32(x1, i);
     for (i = 0; i < loop_ub; i++) {
         x1->data[i] = 0.0;
     }
@@ -36,7 +37,7 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     x2->size[0] = 1;
     loop_ub = (int)(lenGold);
     x2->size[1] = loop_ub;
-    EnsureCapacity_real(x2, i);
+    EnsureCapacity_int32(x2, i);
     for (i = 0; i < loop_ub; i++) {
         x2->data[i] = 0.0;
     }
@@ -52,4 +53,30 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     {
         C->data[i] = (x1->data[i + Nc] + x2->data[i + Nc]) % 2;
     }
+}
+
+void de2bi(ARRAY_int32* out, int input, int bit_num, int type)
+{
+    int mid, loop_ub, i;
+
+    mid = input;
+    i = out->size[0] * out->size[1];
+    EnsureCapacity_int32(out, i);
+    for (i = 0; i < loop_ub; i++) {
+        out->data[i] = 0;
+    }
+
+    for (i = 0; i < loop_ub; i++)
+    {
+        if (mid >= (int)2 << (loop_ub - i - 1))
+        {
+            out->data[loop_ub - i] = 1;
+            mid = mid - (int)1 << (loop_ub - i - 1);
+        }
+    }
+    /*if (type)
+        {
+
+        }*/
+
 }

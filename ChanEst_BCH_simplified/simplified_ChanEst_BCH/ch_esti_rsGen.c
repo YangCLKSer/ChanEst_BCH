@@ -89,7 +89,7 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     }
 
     //RS value corresponding to locRS generation
-    Init_real(&valRS, 2);
+    Init_creal(&valRS, 2);
     i = valRS->size[0] * valRS->size[1];
     valRS->size[0] = 1;
     loop_ub = (int)(2 * numRBDL);
@@ -97,7 +97,8 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     EnsureCapacity_real(valRS, i);
     sqrt_res = sqrt(2) / 2;
     for (i = 0; i < loop_ub; i++) {
-        valRS->data[i] = RSSeq->data[m->data[i]];
+        valRS->data[i].re = RSSeq->data[m->data[i]].re;
+        valRS->data[i].im = RSSeq->data[m->data[i]].im;
     }
 
     Free_int32(m);

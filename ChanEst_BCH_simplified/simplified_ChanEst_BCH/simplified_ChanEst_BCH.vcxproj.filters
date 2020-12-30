@@ -50,7 +50,16 @@
     <ClCompile Include="ch_esti_prseqGen.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="de2bi.c">
+    <ClCompile Include="ch_esti_ls.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="typedefs.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_esti_dct.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_esti_time_intp.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

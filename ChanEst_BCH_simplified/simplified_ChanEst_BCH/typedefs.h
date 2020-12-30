@@ -1,14 +1,7 @@
 #pragma once
 
 #include "datadefs.h"
-
-#define  MAX_int32_T     ((int)(2147483647))    /* 2147483647  */
-#define  MIN_int32_T     ((int)(-2147483647-1)) /* -2147483648 */
-#define  MAX_uint32_T    ((unsigned int)(0xFFFFFFFFU))  /* 4294967295  */
-#define  MIN_uint32_T    ((unsigned int)(0))
-
-#define false 0
-#define true 1
+#include <math.h>
 
 #define boolean_T unsigned char
 #define real_T double
@@ -66,3 +59,13 @@ typedef struct {
 	double NFrame;
 	double CFI;
 } struct_ENB;
+
+extern struct_creal crealAdd(struct_creal a, struct_creal b);
+
+extern struct_creal crealMinus(struct_creal a, struct_creal b);
+
+extern struct_creal crealMulti(struct_creal a, struct_creal b);
+
+extern struct_creal crealDiv(struct_creal a, struct_creal b);
+
+extern struct_creal crealExp(struct_creal a);

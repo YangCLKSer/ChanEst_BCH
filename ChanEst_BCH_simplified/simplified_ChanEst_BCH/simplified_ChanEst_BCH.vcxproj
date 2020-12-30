@@ -150,9 +150,12 @@
     <ClCompile Include="BCHIndices.c" />
     <ClCompile Include="ChannelEst.c" />
     <ClCompile Include="ch_esti.c" />
+    <ClCompile Include="ch_esti_dct.c" />
+    <ClCompile Include="ch_esti_ls.c" />
     <ClCompile Include="ch_esti_prseqGen.c" />
     <ClCompile Include="ch_esti_rsGen.c" />
-    <ClCompile Include="de2bi.c" />
+    <ClCompile Include="ch_esti_time_intp.c" />
+    <ClCompile Include="typedefs.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

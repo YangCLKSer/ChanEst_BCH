@@ -11,10 +11,11 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 {
 	int NID, startSlot, numTxAnt, NCP, numSymDL,numRBDL;
 	int numRxAnt, Len,numOFDM,i,loop_ub, numRS, idxAntPort;
-	int i_ofdm, idxSlot, idxSym;
+	int i_ofdm, idxSlot, idxSym,row,n;
+	double Pc;
 	ARRAY_int32* locOFDMWithRS;
 	ARRAY_int32* locRS, *tempLoc;
-	ARRAY_creal* valRS, *tempVal;
+	ARRAY_creal* valRS, * tempVal, * RxData,temphEst;
 
 	NID = enb.NCellID;
 	startSlot = 2 * enb.NSubframe;
@@ -108,8 +109,36 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 					valRS->data[(valRS->size[0] - 1) * loop_ub + i].re = tempVal->data[i].re; 
 					valRS->data[(valRS->size[0] - 1) * loop_ub + i].im = tempVal->data[i].im;
 				}
-					
+				
+				Pc = 0.1;
 
+				for (n = 0; n < numRxAnt; n++)
+				{
+					Init_creal(&RxData, 2);
+					i = RxData->size[0] * RxData->size[1];
+					RxData->size[0] = numRBDL * 12;
+					loop_ub = (int)(numOFDM);
+					RxData->size[1] = loop_ub;
+					EnsureCapacity_creal(RxData, i);
+					row = 12 * numRBDL * numOFDM;
+					for (i = 0; i < loop_ub*12*numRBDL; i++) {
+						RxData->data[i].re = RxDataBCE->data[n * row + i].re;
+						RxData->data[i].im = RxDataBCE->data[n * row + i].im;
+					}
+
+					ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
+
+					ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);
+					ch_esti_time_intp(temphEst, locOFDMWithRS);
+
+					//reshape
+					loop_ub = (int)(numRxAnt * numTxAnt * Len);
+					for (i = 0; i < loop_ub; i++) {
+						hEst->data[i].re = ;
+						hEst->data[i].im = ;
+					}
+
+				}
 
 			}
 
