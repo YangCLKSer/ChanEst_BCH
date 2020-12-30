@@ -14,4 +14,44 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BCHIndices.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Array_Ctrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelEst.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="typedefs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="datadefs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BCHIndices.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Array_Ctrl.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelEst.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_esti.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_esti_rsGen.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_esti_prseqGen.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="de2bi.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
