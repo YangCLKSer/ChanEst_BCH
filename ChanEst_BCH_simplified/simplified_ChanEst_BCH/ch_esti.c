@@ -1,11 +1,4 @@
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "typedefs.h"
-#include "Array_Ctrl.h"
-#include "datadefs.h"
-#include <math.h>
+#include "ch_esti.h"
 
 void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 {
@@ -15,7 +8,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 	double Pc;
 	ARRAY_int32* locOFDMWithRS;
 	ARRAY_int32* locRS, *tempLoc;
-	ARRAY_creal* valRS, * tempVal, * RxData,temphEst;
+	ARRAY_creal* valRS, * tempVal, * RxData,*temphEst;
 
 	NID = enb.NCellID;
 	startSlot = 2 * enb.NSubframe;
@@ -126,16 +119,21 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 						RxData->data[i].im = RxDataBCE->data[n * row + i].im;
 					}
 
+					
 					ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
 
 					ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);
+
 					ch_esti_time_intp(temphEst, locOFDMWithRS);
 
+
 					//reshape
-					loop_ub = (int)(numRxAnt * numTxAnt * Len);
+					loop_ub = (int)(Len);
 					for (i = 0; i < loop_ub; i++) {
-						hEst->data[i].re = ;
-						hEst->data[i].im = ;
+						hEst->data[(n + idxAntPort * numRxAnt) * Len + i].re = \
+							temphEst->data[i].re;
+						hEst->data[(n + idxAntPort * numRxAnt) * Len + i].im = \
+							temphEst->data[i].im;
 					}
 
 				}

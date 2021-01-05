@@ -46,18 +46,18 @@ typedef struct {
 } struct_creal;
 
 typedef struct {
-	double NDLRB;
+	int NDLRB;
 	char DuplexMode[20];
 	char CyclicPrefix[20];
-	double NCellID;
-	double NSubframe;
-	double TDDConfig;
-	double SSC;
-	double CellRefP;
+	int NCellID;
+	int NSubframe;
+	int TDDConfig;
+	int SSC;
+	int CellRefP;
 	char PHICHDuration[20];
 	char Ng[20];
-	double NFrame;
-	double CFI;
+	int NFrame;
+	int CFI;
 } struct_ENB;
 
 extern struct_creal crealAdd(struct_creal a, struct_creal b);

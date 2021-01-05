@@ -48,14 +48,33 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 		RSrow = locRS->size[1] * n;
 		if (locRS->data[n * locRS->size[1]] != 1)
 		{
-			for (i = 0; i < locRS->size[1]; i++)
+			loop_ub = locRS->data[RSrow + locRS->size[1] - 1]- \
+				locRS->data[RSrow]+1;
+			for (i = 0; i < loop_ub; i++)
+			{
+				hEst->data[OFDMrow + i + locRS->data[RSrow] - 1] = hEst->data[OFDMrow + i];
+			}
+			for (i = 0; i < locRS->data[RSrow]; i++)
 			{
 				//
-				hEst->data[OFDMrow+locRS->data[RSrow+i]].re = \
-					hEst
+				hEst->data[OFDMrow + locRS->data[RSrow + i]].re = \
+					hEst->data[OFDMrow + locRS->data[RSrow]] + \
+					(hEst->data[OFDMrow + locRS->data[RSrow]] - \
+						hEst->data[OFDMrow + locRS->data[RSrow + 1]]) * \
+					(locRS->data[RSrow] - i) / 6;
 			}
-
-
+		}
+		else
+		{
+			for (i = 0; i < locRS->data[RSrow + locRS->size[1] - 1] + 1; i++)
+			{
+				//
+				hEst->data[OFDMrow + locRS->data[RSrow + i]].re = \
+					hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]] + \
+					(hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]] - \
+						hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 2]]) * \
+					(i - locRS->data[RSrow + locRS->size[1] - 1]) / 6;
+			}
 		}
 	}
 }

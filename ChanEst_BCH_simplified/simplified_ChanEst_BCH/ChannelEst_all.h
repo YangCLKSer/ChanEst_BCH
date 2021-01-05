@@ -5,7 +5,7 @@
 #include "typedefs.h"
 #include <math.h>
 
-extern void ChannelEst(const ARRAY_creal* rcvSigFreq, double mmseA1, double mmseB1,
+extern void ChannelEst_all(const ARRAY_creal* rcvSigFreq, double mmseA1, double mmseB1,
 	double mmseA2, double mmseB2, const struct_ENB* ENB, ARRAY_creal* TempChan);
 
 extern void ch_esti(const ARRAY_creal* RxDataBCE, double enb_NDLRB, const

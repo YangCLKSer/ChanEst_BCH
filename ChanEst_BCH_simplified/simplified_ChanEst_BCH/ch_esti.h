@@ -7,4 +7,4 @@
 #include "datadefs.h"
 #include <math.h>
 
-extern void BCHIndices(ARRAY_int32* index_data, struct_ENB* enb);
+extern void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb);
