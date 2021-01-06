@@ -1,8 +1,5 @@
 /* Include Files */
 #include "MIMO_detectRB.h"
-#include "typedefs.h"
-#include "Array_Ctrl.h"
-#include "datadefs.h"
 #include <math.h>
 #include <string.h>
 
@@ -35,11 +32,6 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
  *  REVISION HISTORY:
  *   V1.0 Wang Yan 2009-5-22  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- * Arguments    : const double Received[120]
- *                const double mimoCH[240]
- *                double Detected[120]
- *                double ampd[120]
- * Return Type  : void
  */
 static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
   double Detected[120], double ampd[120])
@@ -143,11 +135,6 @@ static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
  *  REVISION HISTORY:
  *   V1.0 Wang Yan 2009-5-22  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- * Arguments    : const creal_T Received[240]
- *                const creal_T mimoCH[960]
- *                double Detected[240]
- *                double ampd[240]
- * Return Type  : void
  */
 static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH[960],
                      double Detected[240], double ampd[240])
@@ -214,11 +201,6 @@ static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH
  *  REVISION HISTORY:
  *    V1.0 Wang Yan 2009-5-24  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- * Arguments    : const creal_T Received[240]
- *                const creal_T mimoCH[960]
- *                double Detected[240]
- *                double ampd[240]
- * Return Type  : void
  */
 static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mimoCH[960],
   double Detected[240], double ampd[240])
@@ -311,12 +293,6 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
  *  REVISION HISTORY:
  *   V1.0 Wang Yan 2009-5-24  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- * Arguments    : const creal_T RxData[240]
- *                const creal_T equCH[960]
- *                double methodDetect
- *                creal_T Detected_RB[240]
- *                double ampd[240]
- * Return Type  : void
  */
 void MIMO_detectRB(const struct_creal RxData[240], const struct_creal equCH[960], double
                    methodDetect, struct_creal Detected_RB[240], double ampd[240])

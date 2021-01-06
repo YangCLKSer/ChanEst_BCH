@@ -1,25 +1,11 @@
 /* Include Files */
 #include "PBCH_Decode.h"
-#include "BCHIndices.h"
-#include "MIMO_detectRB.h"
-#include "QPSK_demodulate.h"
 #include <math.h>
 #include <string.h>
 
 /* Function Declarations */
-static void bch_decode(const double demod[480], double NID, struct_creal sbits[480],
-  double *nfmod4);
 
-/* Function Definitions */
-
-/*
- * Arguments    : const double demod[480]
- *                double NID
- *                creal_T sbits[480]
- *                double *nfmod4
- * Return Type  : void
- */
-static void bch_decode(const double demod[480], double NID, struct_creal sbits[480],
+void bch_decode(const double demod[480], double NID, struct_creal sbits[480],
   double *nfmod4)
 {
   double Cinit;
@@ -109,17 +95,6 @@ static void bch_decode(const double demod[480], double NID, struct_creal sbits[4
   /* [trblk, sucess] = cc_decode(sbits(1:period), NumTxAnt, period); */
 }
 
-/*
- * Arguments    : const creal_T sym[240]
- *                const creal_T chanEst[960]
- *                const struct0_T *enb
- *                creal_T bits[480]
- *                creal_T symbols[240]
- *                double *nfmod4
- *                double trblk[24]
- *                double *cellrefp
- * Return Type  : void
- */
 void PBCH_Decode(const struct_creal sym[240], const struct_creal chanEst[960], const
                  struct_ENB *enb, struct_creal bits[480], struct_creal symbols[240], double
                  *nfmod4, double trblk[24], double *cellrefp)

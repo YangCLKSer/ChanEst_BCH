@@ -141,20 +141,36 @@
   <ItemGroup>
     <ClInclude Include="Array_Ctrl.h" />
     <ClInclude Include="BCHIndices.h" />
-    <ClInclude Include="ChannelEst.h" />
+    <ClInclude Include="cc_decode.h" />
+    <ClInclude Include="ChanEst.h" />
+    <ClInclude Include="ChannelEst_all.h" />
+    <ClInclude Include="ch_esti.h" />
+    <ClInclude Include="ch_esti_dct.h" />
+    <ClInclude Include="ch_esti_ls.h" />
+    <ClInclude Include="ch_esti_prseqGen.h" />
+    <ClInclude Include="ch_esti_rsGen.h" />
+    <ClInclude Include="ch_esti_time_intp.h" />
+    <ClInclude Include="MIMO_detectRB.h" />
+    <ClInclude Include="PBCH_Decode.h" />
+    <ClInclude Include="QPSK_demodulate.h" />
     <ClInclude Include="typedefs.h" />
     <ClInclude Include="datadefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Array_Ctrl.c" />
     <ClCompile Include="BCHIndices.c" />
+    <ClCompile Include="cc_decode.c" />
     <ClCompile Include="ChannelEst.c" />
+    <ClCompile Include="ChannelEst_all.c" />
     <ClCompile Include="ch_esti.c" />
     <ClCompile Include="ch_esti_dct.c" />
     <ClCompile Include="ch_esti_ls.c" />
     <ClCompile Include="ch_esti_prseqGen.c" />
     <ClCompile Include="ch_esti_rsGen.c" />
     <ClCompile Include="ch_esti_time_intp.c" />
+    <ClCompile Include="MIMO_detectRB.c" />
+    <ClCompile Include="PBCH_Decode.c" />
+    <ClCompile Include="QPSK_demodulate.c" />
     <ClCompile Include="typedefs.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

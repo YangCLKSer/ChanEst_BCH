@@ -1,11 +1,4 @@
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "typedefs.h"
-#include "Array_Ctrl.h"
-#include "datadefs.h"
-#include <math.h>
+#include "ChanEst.h"
 
 void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
     double mmseB1, double mmseA2, double mmseB2, const struct_ENB* ENB)

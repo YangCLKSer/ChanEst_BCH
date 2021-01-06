@@ -1,8 +1,5 @@
-#include "typedefs.h"
-#include "datadefs.h"
-#include "Array_Ctrl.h"
+#include "ch_esti_prseqGen.h"
 
-void de2bi(ARRAY_int32* out, int input, int bit_num, int type);
 void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
 {
 	int Nc = 1600;

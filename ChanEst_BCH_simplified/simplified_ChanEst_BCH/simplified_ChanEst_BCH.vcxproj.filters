@@ -21,13 +21,46 @@
     <ClInclude Include="Array_Ctrl.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ChannelEst.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="typedefs.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="datadefs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelEst_all.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_esti.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MIMO_detectRB.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PBCH_Decode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cc_decode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="QPSK_demodulate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_esti_dct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_esti_ls.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_esti_prseqGen.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChanEst.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_esti_time_intp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ch_esti_rsGen.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -36,9 +69,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Array_Ctrl.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ChannelEst.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ch_esti.c">
@@ -60,6 +90,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ch_esti_time_intp.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelEst_all.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelEst.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MIMO_detectRB.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PBCH_Decode.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cc_decode.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="QPSK_demodulate.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,32 +1,8 @@
-/*
- * Academic License - for use in teaching, academic research, and meeting
- * course requirements at degree granting institutions only.  Not for
- * government, commercial, or other organizational use.
- * File: QPSK_demodulate.c
- *
- * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 05-Jan-2021 17:59:07
- */
-
 /* Include Files */
 #include "QPSK_demodulate.h"
-#include "BCHIndices.h"
-#include "BCHIndices_rtwutil.h"
-#include "ChannelEst.h"
-#include "PBCH_Decode.h"
-#include "ch_esti_dct.h"
-#include "rt_nonfinite.h"
 #include <math.h>
 
-/* Function Definitions */
-
-/*
- * Arguments    : const creal_T inSymbols[240]
- *                const double inPower[240]
- *                double outBits[480]
- * Return Type  : void
- */
-void QPSK_demodulate(const creal_T inSymbols[240], const double inPower[240],
+void QPSK_demodulate(const struct_creal inSymbols[240], const double inPower[240],
                      double outBits[480])
 {
   int k;
@@ -50,9 +26,3 @@ void QPSK_demodulate(const creal_T inSymbols[240], const double inPower[240],
     outBits[ex_tmp + 1] = -(fmin(d2, d1) - fmin(d, d3));
   }
 }
-
-/*
- * File trailer for QPSK_demodulate.c
- *
- * [EOF]
- */
