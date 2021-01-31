@@ -161,13 +161,13 @@
     <ClCompile Include="BCHIndices.c" />
     <ClCompile Include="cc_decode.c" />
     <ClCompile Include="ChannelEst.c" />
-    <ClCompile Include="ChannelEst_all.c" />
     <ClCompile Include="ch_esti.c" />
     <ClCompile Include="ch_esti_dct.c" />
     <ClCompile Include="ch_esti_ls.c" />
     <ClCompile Include="ch_esti_prseqGen.c" />
     <ClCompile Include="ch_esti_rsGen.c" />
     <ClCompile Include="ch_esti_time_intp.c" />
+    <ClCompile Include="main.c" />
     <ClCompile Include="MIMO_detectRB.c" />
     <ClCompile Include="PBCH_Decode.c" />
     <ClCompile Include="QPSK_demodulate.c" />

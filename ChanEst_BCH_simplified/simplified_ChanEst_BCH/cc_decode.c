@@ -603,7 +603,7 @@ int cc_decode(double *d_decode_out, double *decode_in, double d_msg_len, double 
 
 	return crc_result;
 }
-void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+/*void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
 	int i;
     double *BCHin;
@@ -620,7 +620,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (nlhs != 2) 
 		mexErrMsgTxt("Two output required.");
 
-	/**************************** receive data ********************************/
+	**************************** receive data ********************************
 	Temp = mxGetPr(prhs[0]);
 	BurstLength = mxGetN(prhs[0]);
 
@@ -640,13 +640,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 	DataLen = *TempAnt;
 
 
-	/***************************** output data *****************************/
+	***************************** output data *****************************
 	plhs[0] = mxCreateDoubleMatrix(1,24, mxREAL);
 	BCHout = mxGetPr(plhs[0]);
     plhs[1] = mxCreateDoubleMatrix(1,1, mxREAL);
 	Sucess = mxGetPr(plhs[1]);
     *Sucess = cc_decode(BCHout, BCHin, 24, DataLen, 0,NumAnt,0,0,0 );
 
-	/**** free the sapce *****/
+	**** free the sapce *****
 	mxFree(BCHin);
 }
+*/

@@ -57,7 +57,6 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
             return;
     }
     Vshift = ((NID % 6) + V) % 6 + 1;
-    Init_int32(&locRS, 2);
     i = locRS->size[0] * locRS->size[1];
     locRS->size[0] = 1;
     loop_ub = (int)(2 * numRBDL);
@@ -70,6 +69,7 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     //RS seq generation
     lenC = 4 * numMaxRBDL;
     Cinit = (1 << 10) * (7 * (idxSlot + 1) + idxSym + 1) * (2 * NID + 1) + 2 * NID + NCP;
+    Init_int32(&C, 2);
     ch_esti_prseqGen(C, lenC, Cinit);
 
     Init_creal(&RSSeq, 2);
@@ -85,7 +85,6 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     }
 
     //RS value corresponding to locRS generation
-    Init_creal(&valRS, 2);
     i = valRS->size[0] * valRS->size[1];
     valRS->size[0] = 1;
     loop_ub = (int)(2 * numRBDL);

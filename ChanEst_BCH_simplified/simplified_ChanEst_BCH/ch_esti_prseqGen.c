@@ -6,7 +6,6 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     int loop_ub,i,n,lenGold;
     ARRAY_int32* x1, *x2;
 
-    Init_int32(&C, 2);
     i = C->size[0] * C->size[1];
     C->size[0] = 1;
     loop_ub = (int)(lenC);
@@ -57,12 +56,13 @@ void de2bi(ARRAY_int32* out, int input, int bit_num, int type)
     int mid, loop_ub, i;
 
     mid = input;
-    i = out->size[0] * out->size[1];
+    /*i = out->size[0] * out->size[1];
     EnsureCapacity_int32(out, i);
     for (i = 0; i < loop_ub; i++) {
         out->data[i] = 0;
-    }
-
+    }*/
+    
+    loop_ub = bit_num;
     for (i = 0; i < loop_ub; i++)
     {
         if (mid >= (int)2 << (loop_ub - i - 1))

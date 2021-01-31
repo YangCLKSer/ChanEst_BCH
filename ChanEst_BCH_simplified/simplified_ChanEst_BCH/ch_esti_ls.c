@@ -7,7 +7,6 @@ void ch_esti_ls(ARRAY_creal* hEst,ARRAY_creal* RxDataBCE, ARRAY_int32* locOFDMWi
 	numOFDM = RxDataBCE->size[0];
 	numSym = RxDataBCE->size[1];
 
-	Init_creal(&hEst, 2);
 	i = hEst->size[0] * hEst->size[1];
 	hEst->size[0] = numOFDM;
 	loop_ub = (int)(numSym);

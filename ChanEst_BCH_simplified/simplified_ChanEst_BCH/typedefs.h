@@ -1,19 +1,13 @@
 #pragma once
 
+/*#include <complex.h>
+#include <complex>*/
+
 #include "datadefs.h"
 #include <math.h>
 
 #define boolean_T unsigned char
 #define real_T double
-
-typedef struct {
-	struct_creal* data;
-	int* size;
-	int allocatedSize;
-	int numDimensions;
-	boolean_T canFreeData;
-} ARRAY_creal;
-
 typedef struct
 {
 	int* data;
@@ -60,6 +54,16 @@ typedef struct {
 	int CFI;
 } struct_ENB;
 
+typedef struct {
+	struct_creal* data;
+	int* size;
+	int allocatedSize;
+	int numDimensions;
+	boolean_T canFreeData;
+} ARRAY_creal;
+
+
+
 extern struct_creal crealAdd(struct_creal a, struct_creal b);
 
 extern struct_creal crealMinus(struct_creal a, struct_creal b);
@@ -69,3 +73,5 @@ extern struct_creal crealMulti(struct_creal a, struct_creal b);
 extern struct_creal crealDiv(struct_creal a, struct_creal b);
 
 extern struct_creal crealExp(struct_creal a);
+
+extern double crealNorm(struct_creal a);

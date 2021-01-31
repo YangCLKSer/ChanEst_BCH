@@ -1,15 +1,5 @@
 /* Include Files */
 #include "MIMO_detectRB.h"
-#include <math.h>
-#include <string.h>
-
-/* Function Declarations */
-static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
-  double Detected[120], double ampd[120]);
-static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH[960],
-                     double Detected[240], double ampd[240]);
-static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mimoCH[960],
-  double Detected[240], double ampd[240]);
 
 /* Function Definitions */
 
@@ -172,8 +162,9 @@ static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH
     Detected[Detected_tmp + 1] = (-tmpCH[1].re * Received[i1].re - -tmpCH[1].im *
       -Received[i1].im) + (tmpCH[4].re * Received[i].re - -tmpCH[4].im *
       Received[i].im);
-    ampd[i1] = b_norm(*(struct_creal(*)[4])&tmpCH[0]);
-    ampd[i] = b_norm(*(struct_creal(*)[4])&tmpCH[4]);
+    //¥Ê“…
+    ampd[i1] = crealNorm(tmpCH[0]);
+    ampd[i] = crealNorm(tmpCH[4]);
   }
 
   for (i = 0; i < 240; i++) {
@@ -338,7 +329,7 @@ void MIMO_detectRB(const struct_creal RxData[240], const struct_creal equCH[960]
     /*  */
     for (i_strm = 0; i_strm < 240; i_strm++) {
       re_tmp = i_strm << 2;
-      im = rt_hypotd_snf(equCH[re_tmp].re, equCH[re_tmp].im);
+      im = crealNorm(equCH[re_tmp]);
       ampd[i_strm] = im;
       if (-equCH[re_tmp].im == 0.0) {
         re = equCH[re_tmp].re / im;
@@ -394,7 +385,7 @@ void MIMO_detectRB(const struct_creal RxData[240], const struct_creal equCH[960]
     /*  */
     for (i_strm = 0; i_strm < 240; i_strm++) {
       re_tmp = i_strm << 2;
-      im = rt_hypotd_snf(equCH[re_tmp].re, equCH[re_tmp].im);
+      im = crealNorm(equCH[re_tmp]);
       ampd[i_strm] = im;
       if (-equCH[re_tmp].im == 0.0) {
         re = equCH[re_tmp].re / im;

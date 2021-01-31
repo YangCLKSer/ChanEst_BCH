@@ -1,7 +1,7 @@
 #include "ChanEst.h"
 
 void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
-    double mmseB1, double mmseA2, double mmseB2, const struct_ENB* ENB)
+    double mmseB1, double mmseA2, double mmseB2, struct_ENB* ENB)
 {
     ARRAY_creal* rcvSigFreq72;
     int i, loop_ub, b_loop_ub, i1, c_loop_ub;
@@ -41,6 +41,7 @@ void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
 
 
     //求解信道估计
+    Init_creal(&hEst, 2);
     ch_esti(hEst, rcvSigFreq72, ENB);
 
     //TempChan初始化

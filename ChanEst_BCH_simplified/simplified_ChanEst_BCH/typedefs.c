@@ -63,3 +63,11 @@ struct_creal crealExp(struct_creal a)
 
 	return result;
 }
+
+double crealNorm(struct_creal a)
+{
+	double out;
+	out = sqrt(pow(a.re, 2) + pow(a.im, 2));
+	
+	return out;
+}

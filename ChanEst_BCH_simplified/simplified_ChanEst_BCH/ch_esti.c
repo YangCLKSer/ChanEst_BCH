@@ -1,6 +1,6 @@
 #include "ch_esti.h"
 
-void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
+void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 {
 	int NID, startSlot, numTxAnt, NCP, numSymDL,numRBDL;
 	int numRxAnt, Len,numOFDM,i,loop_ub, numRS, idxAntPort;
@@ -10,10 +10,10 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 	ARRAY_int32* locRS, *tempLoc;
 	ARRAY_creal* valRS, * tempVal, * RxData,*temphEst;
 
-	NID = enb.NCellID;
-	startSlot = 2 * enb.NSubframe;
-	numTxAnt = enb.CellRefP;
-	if (!strcmp(enb.CyclicPrefix, "Normal"))
+	NID = enb->NCellID;
+	startSlot = 2 * enb->NSubframe;
+	numTxAnt = enb->CellRefP;
+	if (!strcmp(enb->CyclicPrefix, "Normal"))
 	{
 		NCP = 1;
 		numSymDL = 7;
@@ -23,7 +23,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 		NCP = 0;
 		numSymDL = 6;
 	}
-	numRBDL = enb.NDLRB;
+	numRBDL = enb->NDLRB;
 
 	//init
 	numRxAnt = RxDataBCE->size[0];
@@ -31,7 +31,6 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 	numOFDM = Len / numRBDL / 12;
 	numRS = numRBDL * 2;
 
-	Init_creal(&hEst, 2);
 	i = hEst->size[0] * hEst->size[1];
 	hEst->size[0] = numRxAnt * numTxAnt;
 	loop_ub = (int)(numRxAnt*numTxAnt*Len);
@@ -75,6 +74,8 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 					idxSlot++;
 
 			idxSym = i_ofdm % numSymDL;
+			Init_creal(&tempLoc, 2);
+			Init_creal(&tempVal, 2);
 			ch_esti_rsGen(tempLoc, tempVal, idxSlot, idxSym, NID, idxAntPort, numRBDL, numSymDL, NCP);
 			if (tempLoc->size[1])
 			{
@@ -119,7 +120,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB enb)
 						RxData->data[i].im = RxDataBCE->data[n * row + i].im;
 					}
 
-					
+					Init_creal(&temphEst, 2);
 					ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
 
 					ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);

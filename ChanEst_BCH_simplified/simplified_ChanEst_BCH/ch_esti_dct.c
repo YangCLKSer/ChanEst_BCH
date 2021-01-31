@@ -1,7 +1,5 @@
 #include "ch_esti_dct.h"
 
-void ch_esti_eidct(ARRAY_creal* hEst, ARRAY_creal* y, int m, int row);
-void dct(ARRAY_creal* gEst, ARRAY_creal* temphEst);
 void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* locRS, double Pc)
 {
 	int numOFDM, numSym, numPc, numRS,n,i,loop_ub, OFDMrow,RSrow;
@@ -28,7 +26,9 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 				+ locRS->data[n * loop_ub + i]].im;
 		}
 
+		Init_creal(&gEst, 2);
 		dct(gEst, temphEst);
+
 		for (i = 0; i < numPc; i++)
 		{
 			gEst->data[i].re = gEst->data[i].re * sqrt((double)numSym / ((double)numRS));
@@ -40,10 +40,11 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 			gEst->data[i].im = 0;
 		}
 			
-		ch_esti_eidct(hEst, numRS, locOFDMWithRS->data[n]);
+		ch_esti_eidct(hEst, gEst, numRS, locOFDMWithRS->data[n]);
 		
 		OFDMrow = locOFDMWithRS->data[n] * hEst->size[1];
 		RSrow = locRS->size[1] * n;
+		//n行第一个，其中n为0-n-1
 		if (locRS->data[n * locRS->size[1]] != 1)
 		{
 			loop_ub = locRS->data[RSrow + locRS->size[1] - 1]- \
@@ -55,22 +56,33 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 			for (i = 0; i < locRS->data[RSrow]; i++)
 			{
 				//
-				hEst->data[OFDMrow + locRS->data[RSrow + i]].re = \
-					hEst->data[OFDMrow + locRS->data[RSrow]] + \
-					(hEst->data[OFDMrow + locRS->data[RSrow]] - \
-						hEst->data[OFDMrow + locRS->data[RSrow + 1]]) * \
+				hEst->data[OFDMrow + locRS->data[RSrow + i]].re = 
+					hEst->data[OFDMrow + locRS->data[RSrow]].re + \
+					(hEst->data[OFDMrow + locRS->data[RSrow]].re - \
+						hEst->data[OFDMrow + locRS->data[RSrow + 1]].re) * \
+					(locRS->data[RSrow] - i) / 6;
+				hEst->data[OFDMrow + locRS->data[RSrow + i]].im =
+					hEst->data[OFDMrow + locRS->data[RSrow]].im + \
+					(hEst->data[OFDMrow + locRS->data[RSrow]].im - \
+						hEst->data[OFDMrow + locRS->data[RSrow + 1]].im) * \
 					(locRS->data[RSrow] - i) / 6;
 			}
 		}
-		else
+		//n行最后一个
+		if (locRS->data[(n+1) * locRS->size[1]-1] != numSym)
 		{
 			for (i = 0; i < locRS->data[RSrow + locRS->size[1] - 1] + 1; i++)
 			{
 				//
 				hEst->data[OFDMrow + locRS->data[RSrow + i]].re = \
-					hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]] + \
-					(hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]] - \
-						hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 2]]) * \
+					hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]].re + \
+					(hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]].re - \
+						hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 2]].re) * \
+					(i - locRS->data[RSrow + locRS->size[1] - 1]) / 6;
+				hEst->data[OFDMrow + locRS->data[RSrow + i]].im = \
+					hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]].im + \
+					(hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 1]].im - \
+						hEst->data[OFDMrow + locRS->data[RSrow + locRS->size[1] - 2]].im) * \
 					(i - locRS->data[RSrow + locRS->size[1] - 1]) / 6;
 			}
 		}
@@ -108,23 +120,39 @@ void ch_esti_eidct(ARRAY_creal* hEst, ARRAY_creal* y, int m,int row)
 	}
 }
 
+//DCT-II变换，复数DCT变换相当于对实部复部分别变换，注意公式中n，k是1~m，这里是0~m-1
 void dct(ARRAY_creal* gEst, ARRAY_creal* temphEst)
 {
-	int n, m,i ,loop_ub;
-	ARRAY_creal* ww;
-	struct_creal factor;
+	int n, m,i ,loop_ub, k;
+	struct_creal mid;
+	double factor;
 	n = temphEst->size[0];
 	m = temphEst->size[1];
 
-	Init_creal(&ww, 2);
-	i = ww->size[0] * ww->size[1];
-	ww->size[0] = n;
-	loop_ub = (int)(n);
-	ww->size[1] = loop_ub;
-	EnsureCapacity_creal(ww, i);
-	for (i = 0; i < loop_ub; i++) {
-		factor.re = 0;
-		factor.im = 
-		ww->data=crealExp()
+	i = gEst->size[0] * gEst->size[1];
+	gEst->size[0] = n;
+	loop_ub = m;
+	gEst->size[1] = loop_ub;
+	EnsureCapacity_creal(gEst, i);
+	factor = RT_PI / 2 / m;
+	for (k = 0; k < loop_ub; k++) 
+	{
+		mid.re = 0;
+		mid.im = 0;
+		for (i = 0; i < loop_ub; i++)
+		{
+			if (i == 0) 
+			{
+				mid.re += 1 / sqrt(2) * temphEst->data[i].re * cos(factor * (k));
+				mid.im += 1 / sqrt(2) * temphEst->data[i].im * cos(factor * (k));
+			}
+			else
+			{
+				mid.re += 1 * temphEst->data[i].re * cos(factor * (k));
+				mid.im += 1 * temphEst->data[i].im * cos(factor * (k));
+			}
+		}
+		gEst->data[k].re = sqrt(2 / m) * mid.re;
+		gEst->data[k].im = sqrt(2 / m) * mid.im;
 	}
 }

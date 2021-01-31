@@ -68,27 +68,10 @@ void ch_esti_time_intp( ARRAY_creal * hEst, const  ARRAY_real
         }
 
          Init_real (&y, 2);
-        if (rtIsNaN(locOFDMWithRS->data[0]) || rtIsNaN(locOFDMWithRS->
-            data[locOFDMWithRS->size[0] - 1])) {
-            i1 = y->size[0] * y->size[1];
-            y->size[0] = 1;
-            y->size[1] = 1;
-             EnsureCapacity_real (y, i1);
-            y->data[0] = 0;
-        }
-        else if (locOFDMWithRS->data[locOFDMWithRS->size[0] - 1] <
+        if (locOFDMWithRS->data[locOFDMWithRS->size[0] - 1] <
             locOFDMWithRS->data[0]) {
             y->size[0] = 1;
             y->size[1] = 0;
-        }
-        else if ((rtIsInf(locOFDMWithRS->data[0]) || rtIsInf(locOFDMWithRS->
-            data[locOFDMWithRS->size[0] - 1])) && (locOFDMWithRS->data[0] ==
-                locOFDMWithRS->data[locOFDMWithRS->size[0] - 1])) {
-            i1 = y->size[0] * y->size[1];
-            y->size[0] = 1;
-            y->size[1] = 1;
-             EnsureCapacity_real (y, i1);
-            y->data[0] = 0;
         }
         else if (floor(locOFDMWithRS->data[0]) == locOFDMWithRS->data[0]) {
             i1 = y->size[0] * y->size[1];
