@@ -27,7 +27,7 @@ void ch_esti_time_intp( ARRAY_creal * hEst, const  ARRAY_real
     ARRAY_real * y,*x;
     ARRAY_int32 * r1;
     boolean_T  do_trans, exitg1;
-    boolean_T  guard1 = false;
+    boolean_T  guard1 = 0;
     int numOFDM, i, md2, loop_ub, i1, n, nm1d2, i2, m, j, xcnt;
     double ndbl, apnd, cdiff, gap, a, i_ofdm;
     
@@ -221,12 +221,12 @@ void ch_esti_time_intp( ARRAY_creal * hEst, const  ARRAY_real
                 m = nm1d2;
                 i2 = y->size[1] - nm1d2;
                 md2 = 0;
-                exitg1 = false;
+                exitg1 = 0;
                 while ((!exitg1) && (md2 <= i2)) {
                     n = m + md2;
                     j = n - 1;
                     ndbl = y->data[j];
-                    guard1 = false;
+                    guard1 = 0;
                     if (ndbl == apnd) {
                         loop_ub = b_v->size[1];
                         for (nm1d2 = 0; nm1d2 < loop_ub; nm1d2++) {
@@ -234,7 +234,7 @@ void ch_esti_time_intp( ARRAY_creal * hEst, const  ARRAY_real
                                 nm1d2];
                         }
 
-                        guard1 = true;
+                        guard1 = 1;
                     }
                     else if (ndbl > apnd) {
                         if (ndbl < cdiff) {
@@ -250,14 +250,14 @@ void ch_esti_time_intp( ARRAY_creal * hEst, const  ARRAY_real
                                         [0] * nm1d2) + 1].im;
                             }
 
-                            guard1 = true;
+                            guard1 = 1;
                         }
                         else {
-                            exitg1 = true;
+                            exitg1 = 1;
                         }
                     }
                     else {
-                        guard1 = true;
+                        guard1 = 1;
                     }
 
                     if (guard1) {

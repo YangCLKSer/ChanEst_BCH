@@ -74,12 +74,6 @@
     <ClCompile Include="ch_esti.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ch_esti_rsGen.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ch_esti_prseqGen.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ch_esti_ls.c">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -108,6 +102,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_esti_rsGen.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ch_esti_prseqGen.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

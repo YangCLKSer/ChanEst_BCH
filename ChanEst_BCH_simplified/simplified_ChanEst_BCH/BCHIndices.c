@@ -22,7 +22,7 @@ void BCHIndices(ARRAY_int32* index_data, struct_ENB* enb)
     for (counter = 0; counter < 72; counter++) {
         res = 0;
         b_counter = 1;
-        exitg1 = false;
+        exitg1 = 0;
         while ((!exitg1) && (b_counter - 1 < 24)) {
             trueCount = 0;
             if (b_counter == counter) {
@@ -32,11 +32,11 @@ void BCHIndices(ARRAY_int32* index_data, struct_ENB* enb)
             y = (trueCount != 0);
             if (y) {
                 k = 0;
-                exitg2 = false;
+                exitg2 = 0;
                 while ((!exitg2) && (k <= trueCount - 1)) {
                     if (RSindex[0] == 0.0) {
-                        y = false;
-                        exitg2 = true;
+                        y = 0;
+                        exitg2 = 1;
                     }
                     else {
                         k = 1;
@@ -46,7 +46,7 @@ void BCHIndices(ARRAY_int32* index_data, struct_ENB* enb)
 
             if (y) {
                 res = 1;
-                exitg1 = true;
+                exitg1 = 1;
             }
             else {
                 b_counter++;

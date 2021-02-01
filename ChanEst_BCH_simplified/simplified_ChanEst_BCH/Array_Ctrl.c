@@ -62,7 +62,7 @@ void EnsureCapacity_creal(ARRAY_creal* emxArray, int oldNumel)
 
         emxArray->data = (struct_creal*)newData;
         emxArray->allocatedSize = i;
-        emxArray->canFreeData = true;
+        emxArray->canFreeData = 1;
     }
 }
 
@@ -110,7 +110,7 @@ void EnsureCapacity_int32(ARRAY_int32* emxArray, int oldNumel)
 
         emxArray->data = (int*)newData;
         emxArray->allocatedSize = i;
-        emxArray->canFreeData = true;
+        emxArray->canFreeData = 1;
     }
 }
 
@@ -158,7 +158,7 @@ void EnsureCapacity_real(ARRAY_real* emxArray, int oldNumel)
 
         emxArray->data = (double*)newData;
         emxArray->allocatedSize = i;
-        emxArray->canFreeData = true;
+        emxArray->canFreeData = 1;
     }
 }
 
@@ -206,7 +206,7 @@ void EnsureCapacity_uint32(ARRAY_uint32* emxArray, int oldNumel)
 
         emxArray->data = (unsigned int*)newData;
         emxArray->allocatedSize = i;
-        emxArray->canFreeData = true;
+        emxArray->canFreeData = 1;
     }
 }
 
@@ -294,7 +294,7 @@ void Init_creal(ARRAY_creal** pEmxArray, int numDimensions)
     emxArray->numDimensions = numDimensions;
     emxArray->size = (int*)malloc(sizeof(int) * numDimensions);
     emxArray->allocatedSize = 0;
-    emxArray->canFreeData = true;
+    emxArray->canFreeData = 1;
     for (i = 0; i < numDimensions; i++) {
         emxArray->size[i] = 0;
     }
@@ -315,7 +315,7 @@ void Init_int32(ARRAY_int32** pEmxArray, int numDimensions)
     emxArray->numDimensions = numDimensions;
     emxArray->size = (int*)malloc(sizeof(int) * numDimensions);
     emxArray->allocatedSize = 0;
-    emxArray->canFreeData = true;
+    emxArray->canFreeData = 1;
     for (i = 0; i < numDimensions; i++) {
         emxArray->size[i] = 0;
     }
@@ -336,7 +336,7 @@ void Init_real(ARRAY_real** pEmxArray, int numDimensions)
     emxArray->numDimensions = numDimensions;
     emxArray->size = (int*)malloc(sizeof(int) * numDimensions);
     emxArray->allocatedSize = 0;
-    emxArray->canFreeData = true;
+    emxArray->canFreeData = 1;
     for (i = 0; i < numDimensions; i++) {
         emxArray->size[i] = 0;
     }
@@ -357,7 +357,7 @@ void Init_uint32(ARRAY_uint32** pEmxArray, int numDimensions)
     emxArray->numDimensions = numDimensions;
     emxArray->size = (int*)malloc(sizeof(int) * numDimensions);
     emxArray->allocatedSize = 0;
-    emxArray->canFreeData = true;
+    emxArray->canFreeData = 1;
     for (i = 0; i < numDimensions; i++) {
         emxArray->size[i] = 0;
     }

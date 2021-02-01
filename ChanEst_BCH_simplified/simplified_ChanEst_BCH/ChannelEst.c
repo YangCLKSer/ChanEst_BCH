@@ -26,10 +26,10 @@ void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
     b_rcvSigFreq->size[0] = rcvSigFreq->size[0];
     b_rcvSigFreq->size[1] = 14;
     EnsureCapacity_creal(b_rcvSigFreq, i);
-    for (i = 0; i < 14; i++) {
-        for (i1 = 0; i1 < b_loop_ub; i1++) {
-            b_rcvSigFreq->data[i1 + b_rcvSigFreq->size[0] * i] = rcvSigFreq->data[i1 +
-                rcvSigFreq->size[0] * i];
+    for (i = 0; i < b_loop_ub; i++) {
+        for (i1 = 0; i1 < 14; i1++) {
+            b_rcvSigFreq->data[i1 + b_rcvSigFreq->size[1] * i] = rcvSigFreq->data[i1 +
+                rcvSigFreq->size[1] * i];
         }
     }
 
@@ -45,7 +45,6 @@ void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
     ch_esti(hEst, rcvSigFreq72, ENB);
 
     //TempChan³õÊ¼»¯
-    Init_creal(&TempChan, 3);
     i = TempChan->size[0] * TempChan->size[1] * TempChan->size[2];
     TempChan->size[0] = 1;
     TempChan->size[1] = hEst->size[0];
