@@ -95,9 +95,9 @@ void bch_decode(const double demod[480], double NID, struct_creal sbits[480],
   /* [trblk, sucess] = cc_decode(sbits(1:period), NumTxAnt, period); */
 }
 
-void PBCH_Decode(const struct_creal sym[240], const struct_creal chanEst[960], const
-                 struct_ENB *enb, struct_creal bits[480], struct_creal symbols[240], double
-                 *nfmod4, double trblk[24], double *cellrefp)
+void PBCH_Decode(struct_creal bits[480], struct_creal symbols[240], double *nfmod4, 
+    double trblk[24], double *cellrefp,const struct_creal sym[240], const struct_creal chanEst[960], 
+    const struct_ENB *enb)
 {
   double chanAmp[240];
   double dv[480];

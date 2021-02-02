@@ -71,7 +71,7 @@ void BCHIndices(ARRAY_int32* index_data, struct_ENB* enb)
     }
 
 
-    Init_int32(&index_data, 2);
+    //Init_int32(&index_data, 2);
     i = index_data->size[0] * index_data->size[1];
     index_data->size[0] = 1;
     index_data->size[1] = (counter + counter) + 144;
