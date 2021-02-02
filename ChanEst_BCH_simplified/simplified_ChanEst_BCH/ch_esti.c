@@ -69,7 +69,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 
 		for (i_ofdm = 0; i_ofdm < numOFDM; i_ofdm++)
 		{
-			if (i_ofdm % numSymDL == 0)
+			if ((i_ofdm % numSymDL) == 0)
 				if (i_ofdm)
 					idxSlot++;
 
@@ -111,12 +111,12 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 				
 		Pc = 0.1;
 
-		printf("locOFDMWithRS\n");
-		Print_int32(locOFDMWithRS);
-		printf("locRS\n");
-		Print_int32(locRS);
-		printf("valRS\n");
-		Print_creal(valRS);
+		//printf("locOFDMWithRS\n");
+		//Print_int32(locOFDMWithRS);
+		//printf("locRS\n");
+		//Print_int32(locRS);
+		//printf("valRS\n");
+		//Print_creal(valRS);
 		for (n = 0; n < numRxAnt; n++)
 		{
 			Init_creal(&RxData, 2);
@@ -137,24 +137,24 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 				}	
 			}
 
-			printf("RxData\n");
-			Print_creal(RxData);
+			//printf("RxData\n");
+			//Print_creal(RxData);
 
 			Init_creal(&temphEst, 2);
 			//LS估计
 			ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
-			printf("temphEst ch_esti_ls\n");
-			Print_creal(temphEst);
+			//printf("temphEst ch_esti_ls\n");
+			//Print_creal(temphEst);
 
 			//dct插值
 			ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);
-			printf("temphEst ch_esti_dct\n");
-			Print_creal(temphEst);
+			//printf("temphEst ch_esti_dct\n");
+			//Print_creal(temphEst);
 
 			//时域插值
 			ch_esti_time_intp(temphEst, locOFDMWithRS);
-			printf("temphEst ch_esti_time_intp\n");
-			Print_creal(temphEst);
+			//printf("temphEst ch_esti_time_intp\n");
+			//Print_creal(temphEst);
 
 
 			//reshape
@@ -165,14 +165,16 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 				hEst->data[(n + idxAntPort * numRxAnt) * Len + i].im = \
 					temphEst->data[i].im;
 			}
-
+			//printf("hEst ch_esti\n");
+			//Print_creal(hEst);
 		}
+		Free_int32(&locOFDMWithRS);
+		Free_int32(&locRS);
+		//Free_int32(&tempLoc);
+		Free_creal(&valRS);
+		//Free_creal(&tempVal);
+		Free_creal(&RxData);
+		Free_creal(&temphEst);
 	}
-	Free_int32(&locOFDMWithRS);
-	Free_int32(&locRS);
-	Free_int32(&tempLoc);
-	Free_creal(&valRS);
-	Free_creal(&tempVal);
-	Free_creal(&RxData);
-	Free_creal(&temphEst);
+	
 }

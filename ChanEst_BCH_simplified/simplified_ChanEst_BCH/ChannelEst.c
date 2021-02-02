@@ -51,7 +51,9 @@ void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
     TempChan->size[2] = hEst->size[1];
     EnsureCapacity_creal(TempChan, i);
     loop_ub = hEst->size[0] * hEst->size[1];
+    
     Free_creal(&rcvSigFreq72);
+
     for (i = 0; i < loop_ub; i++) {
         TempChan->data[i].re = 0.0;
         TempChan->data[i].im = 0.0;
@@ -90,6 +92,7 @@ void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
     }
 
     Free_creal(&b_hEst);
+
     //TempChan¸³Öµ
     c_loop_ub = TempChan->size[1];
     loop_ub = TempChan->size[2];

@@ -64,6 +64,8 @@ void main()
 	fclose(fp);
 
 	ChannelEst(chanEst, rxSigFreq, 0, 0, 0, 0, &ENB);
+	printf("chanEst\n");
+	Print_creal(chanEst);
 	
 
 	Free_creal(&chanEst);

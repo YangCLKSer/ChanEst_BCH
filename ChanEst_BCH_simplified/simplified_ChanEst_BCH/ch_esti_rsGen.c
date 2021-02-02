@@ -34,9 +34,9 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
         case 1:
         {
             if (0 == idxSym)
-                V = 0;
-            else if (numSymDL - 3 == idxSym)
                 V = 3;
+            else if (numSymDL - 3 == idxSym)
+                V = 0;
             else
                 return;
             break;
@@ -44,17 +44,18 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
         case 2:
         {
             if (1 == idxSym)
-                V = 3 * (idxAntPort%2);
+                V = 3 * (idxSlot %2);
             else
                 return;
             break;
         }
         case 3:
         {
-            if (0 == idxSym)
+            if (1 == idxSym)
                 V = 3 + 3 * (idxSlot%2);
             else
                 return;
+            break;
         }
         default:
         {

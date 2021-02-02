@@ -367,21 +367,32 @@ void Init_uint32(ARRAY_uint32** pEmxArray, int numDimensions)
 void Print_creal(ARRAY_creal* pEmxArray)
 {
     int i, j;
+    int d1, d2;
+    if (pEmxArray->numDimensions > 2)
+    {
+        d1 = 1;
+        d2 = 2;
+    }
+    else
+    {
+        d1 = 0;
+        d2 = 1;
+    }
     printf("\n");
-    for (i = 0; i < (pEmxArray)->size[0]; i++)
+    for (i = 0; i < (pEmxArray)->size[d1]; i++)
     {
         printf("%d––: ", i);
-        for (j = 0; j < (pEmxArray)->size[1]; j++)
+        for (j = 0; j < (pEmxArray)->size[d2]; j++)
         {
-            if (pEmxArray->data[i * pEmxArray->size[1] + j].im < 0)
-                printf("%.4e-%.4e*i, ", pEmxArray->data[i * pEmxArray->size[1] + j].re, \
-                    - pEmxArray->data[i * pEmxArray->size[1] + j].im);
+            if (pEmxArray->data[i * pEmxArray->size[d2] + j].im < 0)
+                printf("%.4e-%.4e*i, ", pEmxArray->data[i * pEmxArray->size[d2] + j].re, \
+                    - pEmxArray->data[i * pEmxArray->size[d2] + j].im);
             else
-                printf("%.4e+%.4e*i, ", pEmxArray->data[i * pEmxArray->size[1] + j].re, \
-                    pEmxArray->data[i * pEmxArray->size[1] + j].im);
+                printf("%.4e+%.4e*i, ", pEmxArray->data[i * pEmxArray->size[d2] + j].re, \
+                    pEmxArray->data[i * pEmxArray->size[d2] + j].im);
             
         }
-        printf("\n");
+        printf("\n\n");
     }
     printf("\n");
 }
