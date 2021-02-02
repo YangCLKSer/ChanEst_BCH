@@ -3,7 +3,7 @@
 void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 {
 	int NID, startSlot, numTxAnt, NCP, numSymDL,numRBDL;
-	int numRxAnt, Len,numOFDM,i,loop_ub, numRS, idxAntPort;
+	int numRxAnt, Len,numOFDM,i,j,loop_ub, numRS, idxAntPort;
 	int i_ofdm, idxSlot, idxSym,row,n;
 	double Pc;
 	ARRAY_int32* locOFDMWithRS;
@@ -67,14 +67,14 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 
 		idxSlot = startSlot;
 
-		for (i_ofdm = 0; i_ofdm < numSymDL; i++)
+		for (i_ofdm = 0; i_ofdm < numOFDM; i_ofdm++)
 		{
 			if (i_ofdm % numSymDL == 0)
 				if (i_ofdm)
 					idxSlot++;
 
 			idxSym = i_ofdm % numSymDL;
-			Init_creal(&tempLoc, 2);
+			Init_int32(&tempLoc, 2);
 			Init_creal(&tempVal, 2);
 			ch_esti_rsGen(tempLoc, tempVal, idxSlot, idxSym, NID, idxAntPort, numRBDL, numSymDL, NCP);
 			if (tempLoc->size[1])
@@ -83,7 +83,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 				loop_ub = (int)(locOFDMWithRS->size[1] + 1);
 				locOFDMWithRS->size[1] = loop_ub;
 				EnsureCapacity_int32(locOFDMWithRS, i);
-				locOFDMWithRS->data[loop_ub - 1] = numSymDL;
+				locOFDMWithRS->data[loop_ub - 1] = i_ofdm + 1;
 
 				i = locRS->size[0] * locRS->size[1];
 				locRS->size[0] = (int)(locRS->size[0] + 1);
@@ -97,55 +97,82 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 				valRS->size[0] = (int)(valRS->size[0] + 1);
 				loop_ub = (int)(tempLoc->size[1]);
 				valRS->size[1] = loop_ub;
-				EnsureCapacity_int32(valRS, i);
+				EnsureCapacity_creal(valRS, i);
 				for (i = 0; i < loop_ub; i++)
 				{
-					valRS->data[(valRS->size[0] - 1) * loop_ub + i].re = tempVal->data[i].re; 
+					valRS->data[(valRS->size[0] - 1) * loop_ub + i].re = tempVal->data[i].re;
 					valRS->data[(valRS->size[0] - 1) * loop_ub + i].im = tempVal->data[i].im;
 				}
+			}
+			//初始化变量，以对应空集
+			Free_int32(&tempLoc);
+			Free_creal(&tempVal);
+		}
 				
-				Pc = 0.1;
+		Pc = 0.1;
 
-				for (n = 0; n < numRxAnt; n++)
+		printf("locOFDMWithRS\n");
+		Print_int32(locOFDMWithRS);
+		printf("locRS\n");
+		Print_int32(locRS);
+		printf("valRS\n");
+		Print_creal(valRS);
+		for (n = 0; n < numRxAnt; n++)
+		{
+			Init_creal(&RxData, 2);
+			i = RxData->size[0] * RxData->size[1];
+			loop_ub = (int)(numOFDM);
+			RxData->size[0] = loop_ub;
+			RxData->size[1] = numRBDL * 12;
+			EnsureCapacity_creal(RxData, i);
+			row = 12 * numRBDL * numOFDM;
+			//RxDataBCE对每个接收天线有一个行向量，数据结构上reshape等同于赋值，因此仅做转置。
+			for (i = 0; i < loop_ub; i++) {//14行
+				for (j = 0; j < 12 * numRBDL; j++)//72列
 				{
-					Init_creal(&RxData, 2);
-					i = RxData->size[0] * RxData->size[1];
-					RxData->size[0] = numRBDL * 12;
-					loop_ub = (int)(numOFDM);
-					RxData->size[1] = loop_ub;
-					EnsureCapacity_creal(RxData, i);
-					row = 12 * numRBDL * numOFDM;
-					for (i = 0; i < loop_ub*12*numRBDL; i++) {
-						RxData->data[i].re = RxDataBCE->data[n * row + i].re;
-						RxData->data[i].im = RxDataBCE->data[n * row + i].im;
-					}
-
-					Init_creal(&temphEst, 2);
-					ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
-
-					ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);
-
-					ch_esti_time_intp(temphEst, locOFDMWithRS);
-
-
-					//reshape
-					loop_ub = (int)(Len);
-					for (i = 0; i < loop_ub; i++) {
-						hEst->data[(n + idxAntPort * numRxAnt) * Len + i].re = \
-							temphEst->data[i].re;
-						hEst->data[(n + idxAntPort * numRxAnt) * Len + i].im = \
-							temphEst->data[i].im;
-					}
-
-				}
-
+					RxData->data[i * 12 * numRBDL + j].re = \
+						RxDataBCE->data[n * row + j * numOFDM + i].re;
+					RxData->data[i * 12 * numRBDL + j].im = \
+						RxDataBCE->data[n * row + j * numOFDM + i].im;
+				}	
 			}
 
-			Free_int32(tempLoc);
-			Free_creal(tempVal);
+			printf("RxData\n");
+			Print_creal(RxData);
+
+			Init_creal(&temphEst, 2);
+			//LS估计
+			ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
+			printf("temphEst ch_esti_ls\n");
+			Print_creal(temphEst);
+
+			//dct插值
+			ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);
+			printf("temphEst ch_esti_dct\n");
+			Print_creal(temphEst);
+
+			//时域插值
+			ch_esti_time_intp(temphEst, locOFDMWithRS);
+			printf("temphEst ch_esti_time_intp\n");
+			Print_creal(temphEst);
+
+
+			//reshape
+			loop_ub = (int)(Len);
+			for (i = 0; i < loop_ub; i++) {
+				hEst->data[(n + idxAntPort * numRxAnt) * Len + i].re = \
+					temphEst->data[i].re;
+				hEst->data[(n + idxAntPort * numRxAnt) * Len + i].im = \
+					temphEst->data[i].im;
+			}
+
 		}
-
-
-
 	}
+	Free_int32(&locOFDMWithRS);
+	Free_int32(&locRS);
+	Free_int32(&tempLoc);
+	Free_creal(&valRS);
+	Free_creal(&tempVal);
+	Free_creal(&RxData);
+	Free_creal(&temphEst);
 }

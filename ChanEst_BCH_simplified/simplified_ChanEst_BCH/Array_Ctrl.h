@@ -19,4 +19,8 @@ extern void Init_creal(ARRAY_creal** pEmxArray, int numDimensions);
 extern void Init_int32(ARRAY_int32** pEmxArray, int numDimensions);
 extern void Init_real(ARRAY_real** pEmxArray, int numDimensions);
 extern void Init_uint32(ARRAY_uint32** pEmxArray, int numDimensions);
-extern void Create_creal(ARRAY_creal*);
+
+extern void Print_creal(ARRAY_creal* pEmxArray);
+extern void Print_int32(ARRAY_int32* pEmxArray);
+extern void Print_uint32(ARRAY_uint32* pEmxArray);
+extern void Print_real(ARRAY_real* pEmxArray);

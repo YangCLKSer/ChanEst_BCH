@@ -17,21 +17,6 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     ARRAY_int32* C, * mm;
     //int* mm = new int[2 * numRBDL];//C初始化发生在ch_esti_prseqGen内部
     //ARRAY_creal* RSSeq;
-    //初始化mm
-    Init_int32(&mm, 2);
-    i = mm->size[0] * mm->size[1];
-    mm->size[0] = 1;
-    loop_ub = (2*numRBDL);
-    mm->size[1] = loop_ub;
-    EnsureCapacity_int32(mm, i);
-    for (i = 0; i < loop_ub; i++) {
-        mm->data[i] = i + numMaxRBDL - numRBDL + 1;
-        //printf("%d:%d\n", i + 1, mm->data[i]);
-    }
-
-
-    
-
 
     // RS location generation
     switch (idxAntPort)
@@ -105,6 +90,17 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
         RSSeq->data[i].im = sqrt_res * (double)(1 - 2 * C->data[2 * i + 1]);
     }*/
     
+    //初始化mm
+    Init_int32(&mm, 2);
+    i = mm->size[0] * mm->size[1];
+    mm->size[0] = 1;
+    loop_ub = (2 * numRBDL);
+    mm->size[1] = loop_ub;
+    EnsureCapacity_int32(mm, i);
+    for (i = 0; i < loop_ub; i++) {
+        mm->data[i] = i + numMaxRBDL - numRBDL + 1;
+        //printf("%d:%d\n", i + 1, mm->data[i]);
+    }
 
     //RS value corresponding to locRS generation
     i = valRS->size[0] * valRS->size[1];

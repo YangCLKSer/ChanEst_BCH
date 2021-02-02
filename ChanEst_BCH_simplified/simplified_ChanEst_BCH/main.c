@@ -51,16 +51,12 @@ void main()
 				if (i < 72)
 				{
 					fscanf(fp, "%lf\n", &rxSigFreq->data[rxSigFreq->size[1] * i + j].re);
-					printf("%.6lf,\n", rxSigFreq->data[rxSigFreq->size[1] * i + j].re);
-					//fscanf(fp, "%lf\n", &rxSigFreq[i][j].re);
-					//printf("%.6lf,\n", rxSigFreq[i][j].re);
+					//printf("%.6lf,\n", rxSigFreq->data[rxSigFreq->size[1] * i + j].re);
 				}
 				else
 				{
 					fscanf(fp, "%lf\n", &rxSigFreq->data[rxSigFreq->size[1] * (i - 72) + j].im);
-					printf("%.6lf,\n", rxSigFreq->data[rxSigFreq->size[1] * (i - 72) + j].im);
-					//fscanf(fp, "%lf\n", &rxSigFreq[i-72][j].im);
-					//printf("%.6lf,\n", rxSigFreq[i-72][j].im);
+					//printf("%.6lf,\n", rxSigFreq->data[rxSigFreq->size[1] * (i - 72) + j].im);
 				}
 			}
 		}

@@ -12,19 +12,19 @@ void ch_esti_ls(ARRAY_creal* hEst,ARRAY_creal* RxDataBCE, ARRAY_int32* locOFDMWi
 	loop_ub = (int)(numSym);
 	hEst->size[1] = loop_ub;
 	EnsureCapacity_creal(hEst, i);
-	for (i = 0; i < loop_ub; i++) {
+	for (i = 0; i < loop_ub* hEst->size[0]; i++) {
 		hEst->data[i].re = 0;
 		hEst->data[i].im = 0;
 	}
 
 	for (n = 0; n < locOFDMWithRS->size[1]; n++)
 	{
-		row_start = locOFDMWithRS->data[n] * hEst->size[1];
-		col = locRS->data[locRS->size[1] * n + i];
+		row_start = (locOFDMWithRS->data[n]-1) * hEst->size[1];
 		for (i = 0; i < locRS->size[1]; i++)
 		{
+			col = locRS->data[locRS->size[1] * n + i]-1;
 			hEst->data[row_start + col] = \
-				crealDiv(RxDataBCE->data[row_start + col], valRS->data[n*hEst->size[1] + col]);
+				crealDiv(RxDataBCE->data[row_start + col], valRS->data[n*valRS->size[1] + i]);
 		}
 	}
 
