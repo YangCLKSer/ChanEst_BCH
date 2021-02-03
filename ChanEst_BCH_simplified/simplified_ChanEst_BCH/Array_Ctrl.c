@@ -443,3 +443,64 @@ void Print_real(ARRAY_real* pEmxArray)
     }
     printf("\n");
 }
+
+void Zeros_creal(ARRAY_creal* pEmxArray)
+{
+    int loop_ub, i;
+    loop_ub = 1;
+    for (i = 0; i < pEmxArray->numDimensions; i++)
+    {
+        loop_ub *= pEmxArray->size[i];
+    }
+    //EnsureCapacity_creal(pEmxArray, oldnum);
+    for (i = 0; i < loop_ub; i++)
+    {
+        pEmxArray->data[i].im = 0.0;
+        pEmxArray->data[i].re = 0.0;
+    }
+}
+
+void Zeros_real(ARRAY_real* pEmxArray)
+{
+    int loop_ub, i;
+    loop_ub = 1;
+    for (i = 0; i < pEmxArray->numDimensions; i++)
+    {
+        loop_ub *= pEmxArray->size[i];
+    }
+    //EnsureCapacity_real(pEmxArray, oldnum);
+    for (i = 0; i < loop_ub; i++)
+    {
+        pEmxArray->data[i] = 0.0;
+    }
+}
+
+void Zeros_int32(ARRAY_int32* pEmxArray)
+{
+    int loop_ub, i;
+    loop_ub = 1;
+    for (i = 0; i < pEmxArray->numDimensions; i++)
+    {
+        loop_ub *= pEmxArray->size[i];
+    }
+    //EnsureCapacity_int32(pEmxArray, oldnum);
+    for (i = 0; i < loop_ub; i++)
+    {
+        pEmxArray->data[i] = 0;
+    }
+}
+
+void Zeros_uint32(ARRAY_uint32* pEmxArray)
+{
+    int loop_ub, i;
+    loop_ub = 1;
+    for (i = 0; i < pEmxArray->numDimensions; i++)
+    {
+        loop_ub *= pEmxArray->size[i];
+    }
+    //EnsureCapacity_uint32(pEmxArray, oldnum);
+    for (i = 0; i < loop_ub; i++)
+    {
+        pEmxArray->data[i] = 0;
+    }
+}

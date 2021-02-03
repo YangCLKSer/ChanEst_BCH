@@ -24,3 +24,9 @@ extern void Print_creal(ARRAY_creal* pEmxArray);
 extern void Print_int32(ARRAY_int32* pEmxArray);
 extern void Print_uint32(ARRAY_uint32* pEmxArray);
 extern void Print_real(ARRAY_real* pEmxArray);
+
+extern void Zeros_creal(ARRAY_creal* pEmxArray);
+extern void Zeros_real(ARRAY_real* pEmxArray);
+extern void Zeros_int32(ARRAY_int32* pEmxArray);
+extern void Zeros_uint32(ARRAY_uint32* pEmxArray);
+

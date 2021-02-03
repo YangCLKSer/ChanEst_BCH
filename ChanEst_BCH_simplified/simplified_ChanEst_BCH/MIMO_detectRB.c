@@ -23,7 +23,7 @@
  *   V1.0 Wang Yan 2009-5-22  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  */
-static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
+static void mrc(const double Received[120], const double mimoCH[240],
   double Detected[120], double ampd[120])
 {
   int idxStrm;
@@ -227,7 +227,7 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
     temp_mimoCH[c_temp_mimoCH_tmp + 1] = mimoCH[temp_mimoCH_tmp + 2].re;
   }
 
-  b_mld2sfbc(tmpRec, temp_mimoCH, tmpDetd1, ampd1);
+  mrc(tmpRec, temp_mimoCH, tmpDetd1, ampd1);
   for (i = 0; i < 60; i++) {
     tmpRec_tmp = i << 2;
     b_tmpRec_tmp = i << 1;
@@ -245,7 +245,7 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
     temp_mimoCH[c_temp_mimoCH_tmp + 1] = mimoCH[temp_mimoCH_tmp + 3].re;
   }
 
-  b_mld2sfbc(tmpRec, temp_mimoCH, tmpDetd2, ampd2);
+  mrc(tmpRec, temp_mimoCH, tmpDetd2, ampd2);
   for (i = 0; i < 60; i++) {
     temp_mimoCH_tmp = i << 1;
     b_tmpRec_tmp = i << 2;
@@ -285,8 +285,8 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
  *   V1.0 Wang Yan 2009-5-24  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  */
-void MIMO_detectRB(const struct_creal RxData[240], const struct_creal equCH[960], double
-                   methodDetect, struct_creal Detected_RB[240], double ampd[240])
+void MIMO_detectRB(struct_creal Detected_RB[240], double ampd[240], const struct_creal RxData[240], const struct_creal equCH[960], double
+                   methodDetect)
 {
   double b_Detected_RB[240];
   int i_strm;
