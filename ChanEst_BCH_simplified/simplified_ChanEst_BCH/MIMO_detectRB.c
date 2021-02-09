@@ -23,7 +23,7 @@
  *   V1.0 Wang Yan 2009-5-22  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  */
-static void mrc(const double Received[120], const double mimoCH[240],
+static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
   double Detected[120], double ampd[120])
 {
   int idxStrm;
@@ -126,7 +126,7 @@ static void mrc(const double Received[120], const double mimoCH[240],
  *   V1.0 Wang Yan 2009-5-22  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  */
-static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH[960],
+static void mld2sfbc(const struct_complex Received[240], const struct_complex mimoCH[960],
                      double Detected[240], double ampd[240])
 {
   int idxStrm;
@@ -135,7 +135,7 @@ static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH
   unsigned char uv[2];
   int Detected_tmp;
   int tmpCH_tmp;
-  struct_creal tmpCH[8];
+  struct_complex tmpCH[8];
   int b_tmpCH_tmp;
 
   /*  */
@@ -163,8 +163,8 @@ static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH
       -Received[i1].im) + (tmpCH[4].re * Received[i].re - -tmpCH[4].im *
       Received[i].im);
     //¥Ê“…
-    ampd[i1] = crealNorm(tmpCH[0]);
-    ampd[i] = crealNorm(tmpCH[4]);
+    ampd[i1] = complexNorm(tmpCH[0]);
+    ampd[i] = complexNorm(tmpCH[4]);
   }
 
   for (i = 0; i < 240; i++) {
@@ -193,7 +193,7 @@ static void mld2sfbc(const struct_creal Received[240], const struct_creal mimoCH
  *    V1.0 Wang Yan 2009-5-24  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  */
-static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mimoCH[960],
+static void mld4sfbcfstd(const struct_complex Received[240], const struct_complex mimoCH[960],
   double Detected[240], double ampd[240])
 {
   int i;
@@ -227,7 +227,7 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
     temp_mimoCH[c_temp_mimoCH_tmp + 1] = mimoCH[temp_mimoCH_tmp + 2].re;
   }
 
-  mrc(tmpRec, temp_mimoCH, tmpDetd1, ampd1);
+  b_mld2sfbc(tmpRec, temp_mimoCH, tmpDetd1, ampd1);
   for (i = 0; i < 60; i++) {
     tmpRec_tmp = i << 2;
     b_tmpRec_tmp = i << 1;
@@ -245,7 +245,7 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
     temp_mimoCH[c_temp_mimoCH_tmp + 1] = mimoCH[temp_mimoCH_tmp + 3].re;
   }
 
-  mrc(tmpRec, temp_mimoCH, tmpDetd2, ampd2);
+  b_mld2sfbc(tmpRec, temp_mimoCH, tmpDetd2, ampd2);
   for (i = 0; i < 60; i++) {
     temp_mimoCH_tmp = i << 1;
     b_tmpRec_tmp = i << 2;
@@ -261,6 +261,21 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
     ampd[b_tmpRec_tmp + 3] = ampd2[c_temp_mimoCH_tmp];
   }
 }
+
+/*void mrc(struct_complex Detected_RB[240],double ampd[240], const struct_complex RxData[240], const struct_complex equCH[960])
+{
+    double im,re;
+    int i_strm;
+    for (i_strm = 0; i_strm < 240; i_strm++) {
+        im = complexNorm(equCH[i_strm]);
+        ampd[i_strm] = im;
+        re = equCH[i_strm].re / im;
+        im = -equCH[i_strm].im / im;
+
+        Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
+        Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
+    }
+}*/
 
 /*
  * detectRB
@@ -285,122 +300,66 @@ static void mld4sfbcfstd(const struct_creal Received[240], const struct_creal mi
  *   V1.0 Wang Yan 2009-5-24  Created
  * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  */
-void MIMO_detectRB(struct_creal Detected_RB[240], double ampd[240], const struct_creal RxData[240], const struct_creal equCH[960], double
-                   methodDetect)
+void MIMO_detectRB(struct_complex Detected_RB[240], double ampd[240], const struct_complex RxData[240], 
+    const struct_complex equCH[960], double methodDetect)
 {
-  double b_Detected_RB[240];
-  int i_strm;
-  int re_tmp;
-  double im;
-  double re;
+    double b_Detected_RB[240];
+    int i_strm;
+    int re_tmp;
+    double im;
+    double re;
 
-  /* %%%%%%%%%%%%%%%%%%%%%%% DETECTION MODE DEFINATION %%%%%%%%%%%%%%%%%%%%% */
-  /*  Detection Method    Interference      Oredering    Interference   Mode */
-  /*                      Nulling                        Cancellation */
-  /*  MRC(or MF)          N/A               N/A               N/A       0 */
-  /*  MLD for SFBC        N/A               N/A               N/A       1 */
-  /*  MLD for SFBC-FSTD   N/A               N/A               N/A       2 */
-  /*  ZF                  ZF                N/A               ZF        3 */
-  /*  MMSE                MMSE              N/A               ZF        4 */
-  /*  ZF-OSIC             ZF                optimal           ZF        5 */
-  /*  MMSE-OSIC           MMSE              optimal           ZF        6 */
-  /* %%%%%%%%%%%%%%%%%%%%%%%%%%%% DETECTION MODE END %%%%%%%%%%%%%%%%%%%%%%% */
-  /*  */
-  switch ((int)methodDetect) {
-   case 0:
-    /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-    /*  MODULE NAME £∫mld2sfbc */
-    /*  ABSTRACT£∫ML Detection for SFBC */
+    /* %%%%%%%%%%%%%%%%%%%%%%% DETECTION MODE DEFINATION %%%%%%%%%%%%%%%%%%%%% */
+    /*  Detection Method    Interference      Oredering    Interference   Mode */
+    /*                      Nulling                        Cancellation */
+    /*  MRC(or MF)          N/A               N/A               N/A       0 */
+    /*  MLD for SFBC        N/A               N/A               N/A       1 */
+    /*  MLD for SFBC-FSTD   N/A               N/A               N/A       2 */
+    /*  ZF                  ZF                N/A               ZF        3 */
+    /*  MMSE                MMSE              N/A               ZF        4 */
+    /*  ZF-OSIC             ZF                optimal           ZF        5 */
+    /*  MMSE-OSIC           MMSE              optimal           ZF        6 */
+    /* %%%%%%%%%%%%%%%%%%%%%%%%%%%% DETECTION MODE END %%%%%%%%%%%%%%%%%%%%%%% */
     /*  */
-    /*  Input:	 */
-    /*    RxData: received signal */
-    /*    equCH:  channel parameters */
-    /*  				 */
-    /*  Output:	 */
-    /*    Detected_RB: detected symbols */
-    /*    ampd: ampd of equivalent fading channel */
-    /*   */
-    /*  VERSION£∫	V1.0 */
-    /*  AUTHOR: 	 Wang Yan 2009-4-13	 */
-    /*   */
-    /*  REVISION HISTORY: */
-    /*  	V1.0	Wang Yan	2009-5-22		Created */
-    /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-    /*  */
+    switch ((int)methodDetect) {
+    case 0:
     for (i_strm = 0; i_strm < 240; i_strm++) {
-      re_tmp = i_strm << 2;
-      im = crealNorm(equCH[re_tmp]);
-      ampd[i_strm] = im;
-      if (-equCH[re_tmp].im == 0.0) {
-        re = equCH[re_tmp].re / im;
-        im = 0.0;
-      } else if (equCH[re_tmp].re == 0.0) {
-        re = 0.0;
-        im = -equCH[re_tmp].im / im;
-      } else {
+        re_tmp = i_strm;
+        im = complexNorm(equCH[re_tmp]);
+        ampd[i_strm] = im;
         re = equCH[re_tmp].re / im;
         im = -equCH[re_tmp].im / im;
-      }
-
-      Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
-      Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
+        Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
+        Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
     }
     break;
 
-   case 1:
+    case 1:
     mld2sfbc(RxData, equCH, b_Detected_RB, ampd);
     for (i_strm = 0; i_strm < 240; i_strm++) {
-      Detected_RB[i_strm].re = b_Detected_RB[i_strm];
-      Detected_RB[i_strm].im = 0.0;
+        Detected_RB[i_strm].re = b_Detected_RB[i_strm];
+        Detected_RB[i_strm].im = 0.0;
     }
     break;
 
-   case 2:
+    case 2:
     mld4sfbcfstd(RxData, equCH, b_Detected_RB, ampd);
     for (i_strm = 0; i_strm < 240; i_strm++) {
-      Detected_RB[i_strm].re = b_Detected_RB[i_strm];
-      Detected_RB[i_strm].im = 0.0;
+        Detected_RB[i_strm].re = b_Detected_RB[i_strm];
+        Detected_RB[i_strm].im = 0.0;
     }
     break;
 
-   default:
-    /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-    /*  MODULE NAME £∫mld2sfbc */
-    /*  ABSTRACT£∫ML Detection for SFBC */
-    /*  */
-    /*  Input:	 */
-    /*    RxData: received signal */
-    /*    equCH:  channel parameters */
-    /*  				 */
-    /*  Output:	 */
-    /*    Detected_RB: detected symbols */
-    /*    ampd: ampd of equivalent fading channel */
-    /*   */
-    /*  VERSION£∫	V1.0 */
-    /*  AUTHOR: 	 Wang Yan 2009-4-13	 */
-    /*   */
-    /*  REVISION HISTORY: */
-    /*  	V1.0	Wang Yan	2009-5-22		Created */
-    /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-    /*  */
+    default:
     for (i_strm = 0; i_strm < 240; i_strm++) {
-      re_tmp = i_strm << 2;
-      im = crealNorm(equCH[re_tmp]);
-      ampd[i_strm] = im;
-      if (-equCH[re_tmp].im == 0.0) {
-        re = equCH[re_tmp].re / im;
-        im = 0.0;
-      } else if (equCH[re_tmp].re == 0.0) {
-        re = 0.0;
-        im = -equCH[re_tmp].im / im;
-      } else {
-        re = equCH[re_tmp].re / im;
-        im = -equCH[re_tmp].im / im;
-      }
-
-      Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
-      Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
+            re_tmp = i_strm;
+            im = complexNorm(equCH[re_tmp]);
+            ampd[i_strm] = im;
+            re = equCH[re_tmp].re / im;
+            im = -equCH[re_tmp].im / im;
+            Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
+            Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
     }
     break;
-  }
+    }
 }

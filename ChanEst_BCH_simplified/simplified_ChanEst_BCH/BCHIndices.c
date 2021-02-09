@@ -75,7 +75,7 @@ void BCHIndices(ARRAY_int32* index_data, struct_ENB* enb)
     i = index_data->size[0] * index_data->size[1];
     index_data->size[0] = 1;
     index_data->size[1] = (counter + counter) + 144;
-    EnsureCapacity_creal(index_data, i);
+    EnsureCapacity_complex(index_data, i);
     for (b_counter = 0; b_counter < counter; b_counter++) {
         index_data->data[b_counter] = (double)BCHindex01_data[b_counter] + 504.0;
     }

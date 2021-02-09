@@ -1,9 +1,9 @@
 #include "ch_esti_dct.h"
 
-void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* locRS, double Pc)
+void ch_esti_dct(ARRAY_complex* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* locRS, double Pc)
 {
 	int numOFDM, numSym, numPc, numRS,n,i,loop_ub, OFDMrow,RSrow;
-	ARRAY_creal* temphEst, * gEst;
+	ARRAY_complex* temphEst, * gEst;
 	numOFDM = hEst->size[0];
 	numSym = hEst->size[1];
 	numRS = locRS->size[1];
@@ -13,12 +13,12 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 	numPc = (int)(((double)numRS) * Pc / 2) * 2 + 2; //ceil
 	for (n = 0; n < locOFDMWithRS->size[1]; n++)
 	{
-		Init_creal(&temphEst, 2);
+		Init_complex(&temphEst, 2);
 		i = temphEst->size[0] * temphEst->size[1];
 		temphEst->size[0] = 1;
 		loop_ub = (int)(locRS->size[1]);
 		temphEst->size[1] = loop_ub;
-		EnsureCapacity_creal(temphEst, i);
+		EnsureCapacity_complex(temphEst, i);
 		for (i = 0; i < loop_ub; i++) {
 			temphEst->data[i].re = hEst->data[(locOFDMWithRS->data[n]-1) * hEst->size[1] \
 				+ locRS->data[n * loop_ub + i]-1].re;
@@ -26,17 +26,17 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 				+ locRS->data[n * loop_ub + i]-1].im;
 		}
 		//printf("temphEst in ch_esti_dct\n");
-		//Print_creal(temphEst);
+		//Print_complex(temphEst);
 
 
-		Init_creal(&gEst, 2);
+		Init_complex(&gEst, 2);
 		dct(gEst, temphEst);
 		//printf("gEst in ch_esti_dct\n");
-		//Print_creal(gEst);
+		//Print_complex(gEst);
 		i = gEst->size[0] * gEst->size[1];
 		gEst->size[0] = 1;
 		gEst->size[1] = numSym;
-		EnsureCapacity_creal(gEst, i);
+		EnsureCapacity_complex(gEst, i);
 		for (i = 0; i < numPc; i++)
 		{
 			gEst->data[i].re = gEst->data[i].re * sqrt((double)numSym / ((double)numRS));
@@ -48,11 +48,11 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 			gEst->data[i].im = 0;
 		}
 		//printf("gEst in ch_esti_dct\n");
-		//Print_creal(gEst);
+		//Print_complex(gEst);
 
 		ch_esti_eidct(hEst, gEst, numRS, locOFDMWithRS->data[n]-1);
 		//printf("hEst after ch_esti_eidct\n");
-		//Print_creal(hEst);
+		//Print_complex(hEst);
 
 		OFDMrow = (locOFDMWithRS->data[n]-1) * hEst->size[1];
 		RSrow = locRS->size[1] * n;
@@ -67,7 +67,7 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 				hEst->data[OFDMrow + i + locRS->data[RSrow]-1] = hEst->data[OFDMrow + i];
 			}
 			//printf("hEst in ch_esti_dct\n");
-			//Print_creal(hEst);
+			//Print_complex(hEst);
 			for (i = 0; i < locRS->data[RSrow]-1; i++)
 			{
 				//
@@ -102,15 +102,15 @@ void ch_esti_dct(ARRAY_creal* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* loc
 			}
 		}
 		//printf("hEst in ch_esti_dct\n");
-		//Print_creal(hEst);
-		Free_creal(&temphEst);
-		Free_creal(&gEst);
+		//Print_complex(hEst);
+		Free_complex(&temphEst);
+		Free_complex(&gEst);
 	}
 	
 }
 
 //逆dct变换
-void ch_esti_eidct(ARRAY_creal* hEst, ARRAY_creal* y, int m,int row)
+void ch_esti_eidct(ARRAY_complex* hEst, ARRAY_complex* y, int m,int row)
 {
 	int i, k,N,loop_ub;
 	double factor;
@@ -153,10 +153,10 @@ void ch_esti_eidct(ARRAY_creal* hEst, ARRAY_creal* y, int m,int row)
 }
 
 //DCT-II变换，复数DCT变换相当于对实部复部分别变换，注意公式中n，k是1~m，这里是0~m-1
-void dct(ARRAY_creal* gEst, ARRAY_creal* temphEst)
+void dct(ARRAY_complex* gEst, ARRAY_complex* temphEst)
 {
 	int n, m,i ,loop_ub, k;
-	struct_creal mid;
+	struct_complex mid;
 	double factor;
 	n = temphEst->size[0];
 	m = temphEst->size[1];
@@ -165,7 +165,7 @@ void dct(ARRAY_creal* gEst, ARRAY_creal* temphEst)
 	gEst->size[0] = n;
 	loop_ub = m;
 	gEst->size[1] = loop_ub;
-	EnsureCapacity_creal(gEst, i);
+	EnsureCapacity_complex(gEst, i);
 	factor = RT_PI / 2 / ((double)m);
 	for (k = 0; k < loop_ub; k++) 
 	{

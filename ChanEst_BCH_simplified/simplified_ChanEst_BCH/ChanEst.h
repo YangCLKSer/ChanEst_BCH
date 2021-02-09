@@ -9,5 +9,5 @@
 #include <math.h>
 #include "ch_esti.h"
 
-extern void ChannelEst(ARRAY_creal* TempChan, ARRAY_creal* rcvSigFreq, double mmseA1, \
+extern void ChannelEst(ARRAY_complex* TempChan, ARRAY_complex* rcvSigFreq, double mmseA1, \
     double mmseB1, double mmseA2, double mmseB2, struct_ENB* ENB);

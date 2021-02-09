@@ -36,8 +36,8 @@ typedef struct
 } ARRAY_uint32;
 
 typedef struct {
-	real_T re, im;
-} struct_creal;
+	double re, im;
+} struct_complex;
 
 typedef struct {
 	int NDLRB;
@@ -55,23 +55,23 @@ typedef struct {
 } struct_ENB;
 
 typedef struct {
-	struct_creal* data;
+	struct_complex* data;
 	int* size;
 	int allocatedSize;
 	int numDimensions;
 	boolean_T canFreeData;
-} ARRAY_creal;
+} ARRAY_complex;
 
 
 
-extern struct_creal crealAdd(struct_creal a, struct_creal b);
+extern struct_complex complexAdd(struct_complex a, struct_complex b);
 
-extern struct_creal crealMinus(struct_creal a, struct_creal b);
+extern struct_complex complexMinus(struct_complex a, struct_complex b);
 
-extern struct_creal crealMulti(struct_creal a, struct_creal b);
+extern struct_complex complexMulti(struct_complex a, struct_complex b);
 
-extern struct_creal crealDiv(struct_creal a, struct_creal b);
+extern struct_complex complexDiv(struct_complex a, struct_complex b);
 
-extern struct_creal crealExp(struct_creal a);
+extern struct_complex complexExp(struct_complex a);
 
-extern double crealNorm(struct_creal a);
+extern double complexNorm(struct_complex a);

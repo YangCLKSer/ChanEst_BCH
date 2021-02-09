@@ -8,7 +8,7 @@
             /* numMaxRBDL = 110; a const defined by 3GPP LTE Downlink */
             /* NCP = 1; % normal CP */
             /* numSymDL = 7; */
-void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym, int NID, int idxAntPort,
+void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_complex* valRS,int idxSlot, int idxSym, int NID, int idxAntPort,
     int numRBDL, int numSymDL, int NCP)
 {
     int numMaxRBDL = 110;   // a const defined by 3GPP LTE Downlink
@@ -16,7 +16,7 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     double sqrt_res;
     ARRAY_int32* C, * mm;
     //int* mm = new int[2 * numRBDL];//C初始化发生在ch_esti_prseqGen内部
-    //ARRAY_creal* RSSeq;
+    //ARRAY_complex* RSSeq;
 
     // RS location generation
     switch (idxAntPort)
@@ -79,12 +79,12 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     Init_int32(&C, 2);
     ch_esti_prseqGen(C, lenC, Cinit);
 
-    /*Init_creal(&RSSeq, 2);
+    /*Init_complex(&RSSeq, 2);
     i = RSSeq->size[0] * RSSeq->size[1];
     RSSeq->size[0] = 1;
     loop_ub = (int)(2 * numMaxRBDL);
     RSSeq->size[1] = loop_ub;
-    EnsureCapacity_creal(RSSeq, i);
+    EnsureCapacity_complex(RSSeq, i);
     sqrt_res = 0.70710678118654757;
     for (i = 0; i < loop_ub; i++) {
         RSSeq->data[i].re = sqrt_res * (double)(1 - 2 * C->data[2 * i]);
@@ -108,7 +108,7 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     valRS->size[0] = 1;
     loop_ub = (int)(2 * numRBDL);
     valRS->size[1] = loop_ub;
-    EnsureCapacity_creal(valRS, i);
+    EnsureCapacity_complex(valRS, i);
     sqrt_res = 0.70710678118654757;
     for (i = 0; i < loop_ub; i++) {
         valRS->data[i].re = sqrt_res * (double)(1 - 2 * (C->data[2 * (mm->data[i]) - 2]));
@@ -119,5 +119,5 @@ void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_creal* valRS,int idxSlot, int idxSym
     Free_int32(&mm);
     //delete[] mm;
     
-    //Free_creal(&RSSeq);
+    //Free_complex(&RSSeq);
 }

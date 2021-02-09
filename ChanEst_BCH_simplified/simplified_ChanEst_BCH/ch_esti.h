@@ -11,4 +11,4 @@
 #include "ch_esti_dct.h"
 #include "ch_esti_time_intp.h"
 
-extern void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb);
+extern void ch_esti(ARRAY_complex* hEst, ARRAY_complex* RxDataBCE, struct_ENB* enb);

@@ -6,8 +6,8 @@
 /* Function Declarations */
 
 //
-void PBCH_Decode(double bits[480], struct_creal symbols[240], int* nfmod4, int trblk[24],
-    int* cellrefp, struct_creal sym[240], struct_creal chanEst[960], struct_ENB* enb)
+void PBCH_Decode(double bits[480], struct_complex symbols[240], int* nfmod4, int trblk[24],
+    int* cellrefp, struct_complex sym[240], struct_complex chanEst[960], struct_ENB* enb)
 {
     int NID;
     int crp[3] = { 1,2,4 };
@@ -23,6 +23,7 @@ void PBCH_Decode(double bits[480], struct_creal symbols[240], int* nfmod4, int t
     for (i = 0; i < 3; i++)
     {
         c = crp[i];
+        *cellrefp = c;
         MIMO_detectRB(symbols, chanAmp, sym, chanEst, c / 2, 4);
         QPSK_demodulate(demod, symbols, chanAmp);
         bch_decode(bits, nfmod4, trblk, &sucess, demod, NID, c);
@@ -38,6 +39,7 @@ void bch_decode(double sbits[480], int* nfmod4,
 {
     int period, i, step;
     int scramC[1920] = { 0 };
+    double b_trblk[24];
     
     Sync_PRsqn_genr(scramC, NID);//³¤¶È1920,+-1
     period = 1920 / 4;
@@ -60,8 +62,13 @@ void bch_decode(double sbits[480], int* nfmod4,
         {
             sbits[i] = demod[i] * (double)scramC[i + step];
         }
-        cc_decode(trblk, sucess, sbits, NumTxAnt, period);
-        if (sucess)
+        //[trblk, sucess] = cc_decode(sbits(1:period), NumTxAnt, period);
+        *sucess = cc_decode(b_trblk, sbits, 24 , (double)period, 0, (double)NumTxAnt, 0, 0, 0);
+        for (i = 0; i < 24; i++)
+        {
+            trblk[i] = (int)b_trblk[i];
+        }
+        if (*sucess)
             break;
     }
 }
@@ -92,7 +99,7 @@ void Sync_PRsqn_genr(int PRsqnC[1920], int Cinit)
     }
 }
 
-/*void bch_decode(const double demod[480], double NID, struct_creal sbits[480],
+/*void bch_decode(const double demod[480], double NID, struct_complex sbits[480],
   double *nfmod4)
 {
   double Cinit;
@@ -182,8 +189,8 @@ void Sync_PRsqn_genr(int PRsqnC[1920], int Cinit)
   * [trblk, sucess] = cc_decode(sbits(1:period), NumTxAnt, period); *
 }
 
-void PBCH_Decode(struct_creal bits[480], struct_creal symbols[240], double *nfmod4, 
-    double trblk[24], double *cellrefp,const struct_creal sym[240], const struct_creal chanEst[960], 
+void PBCH_Decode(struct_complex bits[480], struct_complex symbols[240], double *nfmod4, 
+    double trblk[24], double *cellrefp,const struct_complex sym[240], const struct_complex chanEst[960], 
     const struct_ENB *enb)
 {
   double chanAmp[240];

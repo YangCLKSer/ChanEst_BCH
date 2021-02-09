@@ -20,7 +20,7 @@
  *    Yang Yushan     2009-04-09      Created
  * ------------------------------------------------------------------------------%
  */
-void ch_esti_time_intp( ARRAY_creal * hEst, const  ARRAY_int32 
+void ch_esti_time_intp( ARRAY_complex * hEst, const  ARRAY_int32 
     * locOFDMWithRS)
 {
     int locN, i_ofdm, i;//后RS序列位置，当前时域位置，当前频域位置

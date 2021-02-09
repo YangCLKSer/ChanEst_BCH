@@ -1,7 +1,7 @@
 #include "ch_esti_ls.h"
 
-void ch_esti_ls(ARRAY_creal* hEst,ARRAY_creal* RxDataBCE, ARRAY_int32* locOFDMWithRS,
-	ARRAY_int32* locRS, ARRAY_creal* valRS)
+void ch_esti_ls(ARRAY_complex* hEst,ARRAY_complex* RxDataBCE, ARRAY_int32* locOFDMWithRS,
+	ARRAY_int32* locRS, ARRAY_complex* valRS)
 {
 	int numOFDM, numSym,loop_ub,i,n, row_start, col;
 	numOFDM = RxDataBCE->size[0];
@@ -11,7 +11,7 @@ void ch_esti_ls(ARRAY_creal* hEst,ARRAY_creal* RxDataBCE, ARRAY_int32* locOFDMWi
 	hEst->size[0] = numOFDM;
 	loop_ub = (int)(numSym);
 	hEst->size[1] = loop_ub;
-	EnsureCapacity_creal(hEst, i);
+	EnsureCapacity_complex(hEst, i);
 	for (i = 0; i < loop_ub* hEst->size[0]; i++) {
 		hEst->data[i].re = 0;
 		hEst->data[i].im = 0;
@@ -24,7 +24,7 @@ void ch_esti_ls(ARRAY_creal* hEst,ARRAY_creal* RxDataBCE, ARRAY_int32* locOFDMWi
 		{
 			col = locRS->data[locRS->size[1] * n + i]-1;
 			hEst->data[row_start + col] = \
-				crealDiv(RxDataBCE->data[row_start + col], valRS->data[n*valRS->size[1] + i]);
+				complexDiv(RxDataBCE->data[row_start + col], valRS->data[n*valRS->size[1] + i]);
 		}
 	}
 

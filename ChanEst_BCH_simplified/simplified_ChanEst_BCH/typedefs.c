@@ -10,36 +10,36 @@
 	4.撰写Test_Main测试函数功能，可以通过txt文本或者其他的方式逐层测试
 */
 
-struct_creal crealAdd(struct_creal a, struct_creal b)
+struct_complex complexAdd(struct_complex a, struct_complex b)
 {
-	struct_creal result;
+	struct_complex result;
 	result.re = a.re + b.re;
 	result.im = a.im + b.im;
 
 	return result;
 }
 
-struct_creal crealMinus(struct_creal a, struct_creal b)
+struct_complex complexMinus(struct_complex a, struct_complex b)
 {
-	struct_creal result;
+	struct_complex result;
 	result.re = a.re - b.re;
 	result.im = a.im - b.im;
 
 	return result;
 }
 
-struct_creal crealMulti(struct_creal a, struct_creal b)
+struct_complex complexMulti(struct_complex a, struct_complex b)
 {
-	struct_creal result;
+	struct_complex result;
 	result.re = a.re * b.re - a.im * b.im;
 	result.im = a.re * b.im + a.im * b.re;
 
 	return result;
 }
 
-struct_creal crealDiv(struct_creal a, struct_creal b)
+struct_complex complexDiv(struct_complex a, struct_complex b)
 {
-	struct_creal result;
+	struct_complex result;
 	if (b.re * b.re + b.im * b.im != 0)
 	{
 		result.re = (a.re * b.re + a.im * b.im) / (b.re * b.re + b.im * b.im);
@@ -55,16 +55,16 @@ struct_creal crealDiv(struct_creal a, struct_creal b)
 	return result;
 }
 
-struct_creal crealExp(struct_creal a)
+struct_complex complexExp(struct_complex a)
 {
-	struct_creal result;
+	struct_complex result;
 	result.re = exp(a.re) * cos(a.im);
 	result.im = exp(a.re) * sin(a.im);
 
 	return result;
 }
 
-double crealNorm(struct_creal a)
+double complexNorm(struct_complex a)
 {
 	double out;
 	out = sqrt(pow(a.re, 2) + pow(a.im, 2));

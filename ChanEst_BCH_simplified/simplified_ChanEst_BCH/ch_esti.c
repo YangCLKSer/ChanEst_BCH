@@ -1,6 +1,6 @@
 #include "ch_esti.h"
 
-void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
+void ch_esti(ARRAY_complex* hEst, ARRAY_complex* RxDataBCE, struct_ENB* enb)
 {
 	int NID, startSlot, numTxAnt, NCP, numSymDL,numRBDL;
 	int numRxAnt, Len,numOFDM,i,j,loop_ub, numRS, idxAntPort;
@@ -8,7 +8,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 	double Pc;
 	ARRAY_int32* locOFDMWithRS;
 	ARRAY_int32* locRS, *tempLoc;
-	ARRAY_creal* valRS, * tempVal, * RxData,*temphEst;
+	ARRAY_complex* valRS, * tempVal, * RxData,*temphEst;
 
 	NID = enb->NCellID;
 	startSlot = 2 * enb->NSubframe;
@@ -35,7 +35,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 	hEst->size[0] = numRxAnt * numTxAnt;
 	loop_ub = (int)(numRxAnt*numTxAnt*Len);
 	hEst->size[1] = Len;
-	EnsureCapacity_creal(hEst, i);
+	EnsureCapacity_complex(hEst, i);
 	for (i = 0; i < loop_ub; i++) {
 		hEst->data[i].re = 0;
 		hEst->data[i].im = 0;
@@ -58,12 +58,12 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 		locRS->size[1] = loop_ub;
 		EnsureCapacity_int32(locRS, i);
 
-		Init_creal(&valRS, 2);
+		Init_complex(&valRS, 2);
 		i = valRS->size[0] * valRS->size[1];
 		valRS->size[0] = 0;
 		loop_ub = (int)(0);
 		valRS->size[1] = loop_ub;
-		EnsureCapacity_creal(valRS, i);
+		EnsureCapacity_complex(valRS, i);
 
 		idxSlot = startSlot;
 
@@ -75,7 +75,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 
 			idxSym = i_ofdm % numSymDL;
 			Init_int32(&tempLoc, 2);
-			Init_creal(&tempVal, 2);
+			Init_complex(&tempVal, 2);
 			ch_esti_rsGen(tempLoc, tempVal, idxSlot, idxSym, NID, idxAntPort, numRBDL, numSymDL, NCP);
 			if (tempLoc->size[1])
 			{
@@ -97,7 +97,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 				valRS->size[0] = (int)(valRS->size[0] + 1);
 				loop_ub = (int)(tempLoc->size[1]);
 				valRS->size[1] = loop_ub;
-				EnsureCapacity_creal(valRS, i);
+				EnsureCapacity_complex(valRS, i);
 				for (i = 0; i < loop_ub; i++)
 				{
 					valRS->data[(valRS->size[0] - 1) * loop_ub + i].re = tempVal->data[i].re;
@@ -106,7 +106,7 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 			}
 			//初始化变量，以对应空集
 			Free_int32(&tempLoc);
-			Free_creal(&tempVal);
+			Free_complex(&tempVal);
 		}
 				
 		Pc = 0.1;
@@ -116,15 +116,15 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 		//printf("locRS\n");
 		//Print_int32(locRS);
 		//printf("valRS\n");
-		//Print_creal(valRS);
+		//Print_complex(valRS);
 		for (n = 0; n < numRxAnt; n++)
 		{
-			Init_creal(&RxData, 2);
+			Init_complex(&RxData, 2);
 			i = RxData->size[0] * RxData->size[1];
 			loop_ub = (int)(numOFDM);
 			RxData->size[0] = loop_ub;
 			RxData->size[1] = numRBDL * 12;
-			EnsureCapacity_creal(RxData, i);
+			EnsureCapacity_complex(RxData, i);
 			row = 12 * numRBDL * numOFDM;
 			//RxDataBCE对每个接收天线有一个行向量，数据结构上reshape等同于赋值，因此仅做转置。
 			for (i = 0; i < loop_ub; i++) {//14行
@@ -138,23 +138,23 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 			}
 
 			//printf("RxData\n");
-			//Print_creal(RxData);
+			//Print_complex(RxData);
 
-			Init_creal(&temphEst, 2);
+			Init_complex(&temphEst, 2);
 			//LS估计
 			ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
 			//printf("temphEst ch_esti_ls\n");
-			//Print_creal(temphEst);
+			//Print_complex(temphEst);
 
 			//dct插值
 			ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);
 			//printf("temphEst ch_esti_dct\n");
-			//Print_creal(temphEst);
+			//Print_complex(temphEst);
 
 			//时域插值
 			ch_esti_time_intp(temphEst, locOFDMWithRS);
 			//printf("temphEst ch_esti_time_intp\n");
-			//Print_creal(temphEst);
+			//Print_complex(temphEst);
 
 
 			//reshape
@@ -166,15 +166,15 @@ void ch_esti(ARRAY_creal* hEst, ARRAY_creal* RxDataBCE, struct_ENB* enb)
 					temphEst->data[i].im;
 			}
 			//printf("hEst ch_esti\n");
-			//Print_creal(hEst);
+			//Print_complex(hEst);
 		}
 		Free_int32(&locOFDMWithRS);
 		Free_int32(&locRS);
 		//Free_int32(&tempLoc);
-		Free_creal(&valRS);
-		//Free_creal(&tempVal);
-		Free_creal(&RxData);
-		Free_creal(&temphEst);
+		Free_complex(&valRS);
+		//Free_complex(&tempVal);
+		Free_complex(&RxData);
+		Free_complex(&temphEst);
 	}
 	
 }

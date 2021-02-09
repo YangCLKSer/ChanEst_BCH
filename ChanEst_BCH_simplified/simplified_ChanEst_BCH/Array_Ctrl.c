@@ -20,11 +20,11 @@
 /* Function Definitions */
 
 /*
- * Arguments    : emxArray_creal_T *emxArray
+ * Arguments    : emxArray_complex_T *emxArray
  *                int oldNumel
  * Return Type  : void
  */
-void EnsureCapacity_creal(ARRAY_creal* emxArray, int oldNumel)
+void EnsureCapacity_complex(ARRAY_complex* emxArray, int oldNumel)
 {
     int newNumel;
     int i;
@@ -53,15 +53,15 @@ void EnsureCapacity_creal(ARRAY_creal* emxArray, int oldNumel)
             }
         }
 
-        newData = calloc((unsigned int)i, sizeof(struct_creal));
+        newData = calloc((unsigned int)i, sizeof(struct_complex));
         if (emxArray->data != NULL) {
-            memcpy(newData, emxArray->data, sizeof(struct_creal) * oldNumel);
+            memcpy(newData, emxArray->data, sizeof(struct_complex) * oldNumel);
             if (emxArray->canFreeData) {
                 free(emxArray->data);
             }
         }
 
-        emxArray->data = (struct_creal*)newData;
+        emxArray->data = (struct_complex*)newData;
         emxArray->allocatedSize = i;
         emxArray->canFreeData = 1;
     }
@@ -212,19 +212,19 @@ void EnsureCapacity_uint32(ARRAY_uint32* emxArray, int oldNumel)
 }
 
 /*
- * Arguments    : emxArray_creal_T **pEmxArray
+ * Arguments    : emxArray_complex_T **pEmxArray
  * Return Type  : void
  */
-void Free_creal(ARRAY_creal** pEmxArray)
+void Free_complex(ARRAY_complex** pEmxArray)
 {
-    if (*pEmxArray != (ARRAY_creal*)NULL) {
-        if (((*pEmxArray)->data != (struct_creal*)NULL) && (*pEmxArray)->canFreeData) {
+    if (*pEmxArray != (ARRAY_complex*)NULL) {
+        if (((*pEmxArray)->data != (struct_complex*)NULL) && (*pEmxArray)->canFreeData) {
             free((*pEmxArray)->data);
         }
 
         free((*pEmxArray)->size);
         free(*pEmxArray);
-        *pEmxArray = (ARRAY_creal*)NULL;
+        *pEmxArray = (ARRAY_complex*)NULL;
     }
 }
 
@@ -281,17 +281,17 @@ void Free_uint32(ARRAY_uint32** pEmxArray)
 }
 
 /*
- * Arguments    : emxArray_creal_T **pEmxArray
+ * Arguments    : emxArray_complex_T **pEmxArray
  *                int numDimensions
  * Return Type  : void
  */
-void Init_creal(ARRAY_creal** pEmxArray, int numDimensions)
+void Init_complex(ARRAY_complex** pEmxArray, int numDimensions)
 {
-    ARRAY_creal* emxArray;
+    ARRAY_complex* emxArray;
     int i;
-    *pEmxArray = (ARRAY_creal*)malloc(sizeof(ARRAY_creal));
+    *pEmxArray = (ARRAY_complex*)malloc(sizeof(ARRAY_complex));
     emxArray = *pEmxArray;
-    emxArray->data = (struct_creal*)NULL;
+    emxArray->data = (struct_complex*)NULL;
     emxArray->numDimensions = numDimensions;
     emxArray->size = (int*)malloc(sizeof(int) * numDimensions);
     emxArray->allocatedSize = 0;
@@ -364,7 +364,7 @@ void Init_uint32(ARRAY_uint32** pEmxArray, int numDimensions)
     }
 }
 
-void Print_creal(ARRAY_creal* pEmxArray)
+void Print_complex(ARRAY_complex* pEmxArray)
 {
     int i, j;
     int d1, d2;
@@ -444,7 +444,7 @@ void Print_real(ARRAY_real* pEmxArray)
     printf("\n");
 }
 
-void Zeros_creal(ARRAY_creal* pEmxArray)
+void Zeros_complex(ARRAY_complex* pEmxArray)
 {
     int loop_ub, i;
     loop_ub = 1;
@@ -452,7 +452,7 @@ void Zeros_creal(ARRAY_creal* pEmxArray)
     {
         loop_ub *= pEmxArray->size[i];
     }
-    //EnsureCapacity_creal(pEmxArray, oldnum);
+    //EnsureCapacity_complex(pEmxArray, oldnum);
     for (i = 0; i < loop_ub; i++)
     {
         pEmxArray->data[i].im = 0.0;

@@ -5,5 +5,5 @@
 #include "ch_esti_prseqGen.h"
 #include <math.h>
 
-extern void ch_esti_rsGen(ARRAY_int32* locRS, ARRAY_creal* valRS, int idxSlot, int idxSym, int NID, int idxAntPort,
+extern void ch_esti_rsGen(ARRAY_int32* locRS, ARRAY_complex* valRS, int idxSlot, int idxSym, int NID, int idxAntPort,
     int numRBDL, int numSymDL, int NCP);

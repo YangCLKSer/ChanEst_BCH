@@ -7,4 +7,4 @@
 
 
 /* Function Declarations */
-extern void QPSK_demodulate(double outBits[480], const struct_creal inSymbols[240], const double inPower[240]);
+extern void QPSK_demodulate(double outBits[480], const struct_complex inSymbols[240], const double inPower[240]);
