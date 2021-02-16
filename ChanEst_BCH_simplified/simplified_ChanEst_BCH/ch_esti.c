@@ -1,5 +1,34 @@
+#pragma once
 #include "ch_esti.h"
 
+/*
+Channel Estimation function
+Abstract: 
+  This function deals with the received data and produces the channel
+  estimation results, also removes the RS for later produres.
+Input:
+  RxDataBCE, received data before channel estimation,
+      size() = [ numRxAnt, Len ], Len = numRBDL*12
+  methodCE, method used for channel estimation, ABCD
+      A: 2D estimation, 
+      B: time interp, 1-linear
+      C: freq interp, 1-linear, 2-mmse, 3-dft, 4-dct
+      D: rs estimation, 1-ls, 2-mmse
+      Note that, mmse algorithm and 2D estimation can not be used.
+  Pc, cut off windows for dft and dct algorithm, 0.2 - 1.0
+  startSlot, the index of start slot of RxDataBCE
+  NID, ID number of Cell
+  numTxAnt, number of Tx antenna
+      Note that, numTxAnt is assumed to be 1 for current version
+  numRBDL, number of resource blocks downlink
+  numSymDL, number of ofdms per slot, sometimes = numSym
+  NCP, type of CP, 1-normal, 0-extend
+Output:   
+  hEst, channel freq estimation output, with rs
+      size() = [ numTxAnt*numRxAnt, Len ], Len = Len in RxDataBCE.
+Reference: 
+  [1] 3GPP TS 36.211 V8.4.0 (2008-09).
+-----------------------------------------------------------------------------*/
 void ch_esti(ARRAY_complex* hEst, ARRAY_complex* RxDataBCE, struct_ENB* enb)
 {
 	int NID, startSlot, numTxAnt, NCP, numSymDL,numRBDL;

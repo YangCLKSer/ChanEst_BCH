@@ -1,5 +1,19 @@
+#pragma once
 #include "ch_esti_ls.h"
-
+/*
+LS estimation of channel frequency response on RS locations
+Abstract: 
+  This function is ls estimation of channel frequency response.
+Input:
+  RxDataBCE, the input Rx data before channel estimation.
+  locOFDMWithRS, locations of ofdms with rs.
+  locRS, locations of rs in ofdms with rs.
+  valRS, value of rs, the same as that in trasmitter, after recovered.
+Output:   
+  hEst, channel freq estimation output after ls estimation.
+Reference: 
+  NULL.
+-----------------------------------------------------------------------------*/
 void ch_esti_ls(ARRAY_complex* hEst,ARRAY_complex* RxDataBCE, ARRAY_int32* locOFDMWithRS,
 	ARRAY_int32* locRS, ARRAY_complex* valRS)
 {

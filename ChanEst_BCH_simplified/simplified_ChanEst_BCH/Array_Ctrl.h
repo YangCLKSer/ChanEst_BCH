@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 #include "typedefs.h"
 //#include "rtwtypes.h"
 //#include "BCHIndices_types.h"

@@ -1,13 +1,29 @@
+#pragma once
 #include "ch_esti_rsGen.h"
 
-
-
-
-/*------------------------ch_esti_rsGen.m---------------------------*/
-            /* ------------------------------------------------------------------------------% */
-            /* numMaxRBDL = 110; a const defined by 3GPP LTE Downlink */
-            /* NCP = 1; % normal CP */
-            /* numSymDL = 7; */
+/*
+Reference Signals Generation method, current only for Cell - specific.
+Abstract:
+Reference signals generation contains two parts, sequence generationand
+mapping to resource elements.
+Input :
+    idxSlot, index of slot, 0, 1, ..., 19.
+    idxSym, index of symbol, 0, 1, 2, 3, 4, 5, 6.
+    NID, number of Cell ID
+    numRBDL, number of resource blocks for downlink
+    idxAntPort, index of antenna port, 0, 1, 2, 3.
+    Output:
+locRS, location of reference signals
+valRS, value of reference signals corresponding to locRS
+Note that, if the idxSym has no reference signals, locRSand valRS return[]
+Reference :
+    [1] 3GPP TS 36.211 V8.4.0 (2008 - 09), 6.10.1, pp.62 - 64
+    Author :
+    Yang Yushan     2009 - 04 - 09
+    Version History :
+Yang Yushan     2009 - 04 - 09      Revised
+Wang Qingwen    Created
+------------------------------------------------------------------------------ */
 void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_complex* valRS,int idxSlot, int idxSym, int NID, int idxAntPort,
     int numRBDL, int numSymDL, int NCP)
 {

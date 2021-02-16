@@ -1,3 +1,4 @@
+#pragma once
 /*
 ********************************************************************************
 * Copyright (c) 2009, NCRL.
@@ -23,15 +24,7 @@
 *			INCLUDE FILES
 ********************************************************************************
 */
-#include "typedefs.h"
-#include "Array_Ctrl.h"
-#include "datadefs.h"
 #include "cc_decode.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <conio.h>
 
 //#define BCH_OUT_LEN 1920
 
@@ -114,20 +107,20 @@ void deinterleave(double *decode_in_data, int info_len, int decode_in_data_len,
 	if (NULL == (de = (double *)malloc(sizeof(double)*decode_in_data_len)))
 	{
 		printf("can't malloc memory, quit \n");
-		_getch();
-		exit(0);
+		//_getch();
+		//exit(0);
 	}
 	if (NULL == (ch = (double *)malloc(sizeof(double)*info_len)))
 	{
 		printf("can't malloc memory, quit \n");
-		_getch();
-		exit(0);
+		//_getch();
+		//exit(0);
 	}
 	if (NULL == (temp = (double *)malloc(sizeof(double)*info_len)))
 	{
 		printf("can't malloc memory, quit \n");
-		_getch();
-		exit(0);
+		//_getch();
+		//exit(0);
 	}
 
 	//deinterleave each block
@@ -529,21 +522,21 @@ int cc_decode(double *d_decode_out, double *decode_in, double d_msg_len, double 
 	if (NULL == (decode_in_data = (double *)malloc(sizeof(double)*decode_in_data_len)))
 	{
 		printf("can't malloc memory, quit \n");
-		_getch();
-		exit(0);
+		//_getch();
+		//exit(0);
 	}
 	if (NULL == (decode_out_crc = (int *)malloc(sizeof(int)*info_len)))
 	{
 		printf("can't malloc memory, quit \n");
-		_getch();
-		exit(0);
+		//_getch();
+		//exit(0);
 	}
 	//∆•≈‰matlab
 	if (NULL == (decode_out = (int *)malloc(sizeof(int)*msg_len)))
 	{
 		printf("can't malloc memory, quit \n");
-		_getch();
-		exit(0);
+		//_getch();
+		//exit(0);
 	}
 
 	//combine data that transmit repeatedly
@@ -651,3 +644,4 @@ int cc_decode(double *d_decode_out, double *decode_in, double d_msg_len, double 
 	mxFree(BCHin);
 }
 */
+

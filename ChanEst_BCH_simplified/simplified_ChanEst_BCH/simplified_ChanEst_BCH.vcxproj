@@ -145,13 +145,13 @@
     <ClInclude Include="BCHIndices.h" />
     <ClInclude Include="cc_decode.h" />
     <ClInclude Include="ChanEst.h" />
-    <ClInclude Include="ChannelEst_all.h" />
     <ClInclude Include="ch_esti.h" />
     <ClInclude Include="ch_esti_dct.h" />
     <ClInclude Include="ch_esti_ls.h" />
     <ClInclude Include="ch_esti_prseqGen.h" />
     <ClInclude Include="ch_esti_rsGen.h" />
     <ClInclude Include="ch_esti_time_intp.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="MIMO_detectRB.h" />
     <ClInclude Include="PBCH_Decode.h" />
     <ClInclude Include="QPSK_demodulate.h" />

@@ -1,3 +1,4 @@
+#pragma once
 /* Include Files */
 #include "MIMO_detectRB.h"
 
@@ -42,7 +43,7 @@ static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
   double b_y;
 
   /*  */
-  memset(&Detected[0], 0, 120U * sizeof(double));
+  //memset(&Detected[0], 0, 120 * sizeof(double));
   for (idxStrm = 0; idxStrm < 60; idxStrm++) {
     unnamed_idx_0_tmp = (idxStrm + 1) << 1;
     b_unnamed_idx_0_tmp = unnamed_idx_0_tmp - 2;

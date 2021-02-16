@@ -1,8 +1,5 @@
-#include "ChanEst.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include "BCHIndices.h"
-#include "PBCH_Decode.h"
+#pragma once
+#include "main.h"
 //#program warning(disable:4996)
 
 void main()
@@ -48,12 +45,12 @@ void main()
 	FILE* fp;
 	if ((fp = fopen("C:\\1D\\1SEU\\2020.09_USRP_E310\\C\\C_proj\\ChanEst_BCH_simplified\\simplified_ChanEst_BCH\\data\\rxSigFreq.txt", "r")) == NULL)
 	{
-		printf("文件打开失败\n");
+		//printf("文件打开失败\n");
 		exit(0);
 	}
 	else
 	{
-		printf("文件打开成功\n");
+		//printf("文件打开成功\n");
 
 		for (i = 0; i < 72 * 2; i++)
 		{
@@ -74,14 +71,15 @@ void main()
 	}
 	fclose(fp);
 
+	Init_complex(&chanEst, 3);
 	ChannelEst(chanEst, rxSigFreq, 0, 0, 0, 0, &ENB);
-	printf("chanEst\n");
-	Print_complex(chanEst);
+	//printf("chanEst\n");
+	//Print_complex(chanEst);
 
 	Init_int32(&bch_ind, 2);
 	BCHIndices(bch_ind, &ENB);
-	printf("bch_ind\n");
-	Print_int32(bch_ind);
+	//printf("bch_ind\n");
+	//Print_int32(bch_ind);
 
 	/*Init_complex(&bchHest, 3);
 	i = bchHest->size[0] * bchHest->size[1] * bchHest->size[2];
@@ -133,8 +131,10 @@ void main()
 		bchRx[i] = rxSigFreq->data[b * rxSigFreq->size[1] + a];
 	}
 	
-	
+	Free_complex(&rxSigFreq);
 	Free_complex(&chanEst);
+	Free_int32(&bch_ind);
+
 
 	/*double bch_bits[480];
 	struct_complex pbch_symbols[240];

@@ -1,8 +1,10 @@
 #pragma once
 
-/*#include <complex.h>
-#include <complex>*/
-
+//控制关于控制台头文件的编译与否
+#define ON_PC 1
+#ifdef ON_PC
+#include <stdio.h>
+#endif // ON_PC
 #include "datadefs.h"
 #include <math.h>
 

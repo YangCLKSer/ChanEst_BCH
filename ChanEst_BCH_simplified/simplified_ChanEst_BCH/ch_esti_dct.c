@@ -1,5 +1,19 @@
+#pragma once
 #include "ch_esti_dct.h"
-
+/*
+DCT frequency interpolation of channel frequency response on ofdms with RS
+Abstract:
+  This function is dct frequency interpolation for ofdms with rs.
+Input:
+  hEst, the estimation results after ls sampling.
+  locOFDMWithRS, locations of ofdms with rs.
+  locRS, locations of rs in ofdms with rs.
+  Pc, the energy extract coefficient.
+Output:
+  hEst, channel freq estimation output after dct interpolation.
+Reference:
+  NULL.
+------------------------------------------------------------------------------*/
 void ch_esti_dct(ARRAY_complex* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* locRS, double Pc)
 {
 	int numOFDM, numSym, numPc, numRS,n,i,loop_ub, OFDMrow,RSrow;
