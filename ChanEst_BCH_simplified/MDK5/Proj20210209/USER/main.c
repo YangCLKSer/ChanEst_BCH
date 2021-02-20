@@ -37,7 +37,7 @@ int main(void)
 	sprintf((char*)lcd_id,"LCD ID:%04X",lcddev.id);//将LCD ID打印到lcd_id数组。	
 	while(1)
 	{
-		//x = 12;
+		x = 12;
 		if (x!=x_rec)
 		{
 			x_rec = x;
@@ -72,7 +72,6 @@ int main(void)
 		
 		LCD_ShowString(10,165,300,12,12,"Start Up.");
 		delay_ms(1000);
-		Init_complex(&chanEst, 3);
 		Init_complex(&rxSigFreq, 2);
 		i = rxSigFreq->size[0] * rxSigFreq->size[1];
 		rxSigFreq->size[0] = 72;
@@ -127,7 +126,7 @@ int main(void)
 		}
 		fclose(fp);*/
 		
-		/*
+		
 		Init_complex(&chanEst, 3);
 		ChannelEst(chanEst, rxSigFreq, 0, 0, 0, 0, &ENB);
 		LCD_ShowString(10,180,300,12,12,"ChannelEst Done.");
@@ -140,7 +139,7 @@ int main(void)
 		delay_ms(10);
 		//printf("bch_ind\n");
 		//Print_int32(bch_ind);
-		*/
+		
 		for (i = 0; i < chanEst->size[1]; i++) {
 			for (j = 0; j < 240; j++)
 			{

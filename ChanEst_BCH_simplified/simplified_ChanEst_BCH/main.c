@@ -2,9 +2,13 @@
 #include "main.h"
 //#program warning(disable:4996)
 
+#define CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
+#include <crtdbg.h>  
 void main()
 {
-	//struct_complex rxSigFreq[72][14];
+	//_CrtSetBreakAlloc(78);
+	//变量申请
 	struct_ENB ENB;
 	int i, j, loop_ub;
 	int a, b;
@@ -17,18 +21,7 @@ void main()
 	struct_complex bchRx[240];
 	struct_complex bchHest[960];
 
-	Init_complex(&chanEst, 3);
-	Init_complex(&rxSigFreq, 2);
-	i = rxSigFreq->size[0] * rxSigFreq->size[1];
-	rxSigFreq->size[0] = 72;
-	rxSigFreq->size[1] = 14;
-	loop_ub = rxSigFreq->size[0];
-	EnsureCapacity_complex(rxSigFreq, i);
-	for (i = 0; i < loop_ub; i++) {
-		rxSigFreq->data[i].re = 0.0;
-		rxSigFreq->data[i].im = 0.0;
-	}
-
+	//ENB数据初始化
 	ENB.NDLRB = 6;
 	strcpy(ENB.DuplexMode, "TDD");
 	strcpy(ENB.CyclicPrefix, "Normal");
@@ -41,6 +34,21 @@ void main()
 	strcpy(ENB.Ng, "");
 	ENB.NFrame = 0;
 	ENB.CFI = 0;
+
+	//接收信号初始化
+	Init_complex(&rxSigFreq, 2);
+	i = rxSigFreq->size[0] * rxSigFreq->size[1];
+	rxSigFreq->size[0] = 72;
+	rxSigFreq->size[1] = 14;
+	loop_ub = rxSigFreq->size[0]* rxSigFreq->size[1];
+	EnsureCapacity_complex(rxSigFreq, i);
+	for (i = 0; i < loop_ub; i++) {
+		rxSigFreq->data[i].re = 0.0;
+		rxSigFreq->data[i].im = 0.0;
+	}
+	
+
+	
 
 	FILE* fp;
 	if ((fp = fopen("C:\\1D\\1SEU\\2020.09_USRP_E310\\C\\C_proj\\ChanEst_BCH_simplified\\simplified_ChanEst_BCH\\data\\rxSigFreq.txt", "r")) == NULL)
@@ -71,6 +79,7 @@ void main()
 	}
 	fclose(fp);
 
+
 	Init_complex(&chanEst, 3);
 	ChannelEst(chanEst, rxSigFreq, 0, 0, 0, 0, &ENB);
 	//printf("chanEst\n");
@@ -81,22 +90,7 @@ void main()
 	//printf("bch_ind\n");
 	//Print_int32(bch_ind);
 
-	/*Init_complex(&bchHest, 3);
-	i = bchHest->size[0] * bchHest->size[1] * bchHest->size[2];
-	bchHest->size[0] = 1;
-	bchHest->size[1] = chanEst->size[1];
-	bchHest->size[2] = bch_ind->size[1];
-	loop_ub = bchHest->size[2];
-	EnsureCapacity_complex(bchHest, i);
-	for (i = 0; i < bchHest->size[1]; i++) {
-		for (j = 0; j < bchHest->size[2]; j++)
-		{
-			bchHest->data[loop_ub * i + j] = \
-				chanEst->data[chanEst->size[2] * i + bch_ind->data[j] - 1];
-		}
-	}
-	printf("bchHest\n");
-	Print_complex(bchHest);*/
+	//取BCH符号上的信道估计，bchHest = chanEst(:,:,bch_ind);
 	for (i = 0; i < chanEst->size[1]; i++) {
 		for (j = 0; j < 240; j++)
 		{
@@ -106,23 +100,7 @@ void main()
 	}
 	
 
-	
-	/*Init_complex(&bchRx, 2);
-	i = bchRx->size[0] * bchRx->size[1];
-	bchRx->size[0] = 1;
-	bchRx->size[1] = bch_ind->size[1];
-	loop_ub = bchRx->size[1];
-	EnsureCapacity_complex(bchRx, i);
-	for (i = 0; i < loop_ub; i++)
-	{
-		//rxSigFreq的列与行，开头为0
-		a = ((bch_ind->data[i] - 1) / rxSigFreq->size[0]);
-		b = ((bch_ind->data[i] - 1) % rxSigFreq->size[0]);
-		bchRx->data[i] = rxSigFreq->data[b * rxSigFreq->size[1] + a];
-	}
-	printf("bchRx\n");
-	Print_complex(bchRx);*/
-
+	//取BCH符号，bchRx = rxSigFreq(bch_ind);
 	for (i = 0; i < bch_ind->size[1]; i++)
 	{
 		//rxSigFreq的列与行，开头为0
@@ -131,20 +109,14 @@ void main()
 		bchRx[i] = rxSigFreq->data[b * rxSigFreq->size[1] + a];
 	}
 	
+	//释放先前内存，此步可以按变量提前以节省内存
 	Free_complex(&rxSigFreq);
 	Free_complex(&chanEst);
 	Free_int32(&bch_ind);
 
-
-	/*double bch_bits[480];
-	struct_complex pbch_symbols[240];
-	int sfmod4;
-	int MIB[24];
-	struct_complex bchRx[240];
-	struct_complex bchHest[960];*/
-
-	//PBCH_Decode(bch_bits, pbch_symbols, MIB, &(ENB.CellRefP), bchRx,bchHest, &ENB);
 	PBCH_Decode(bch_bits, pbch_symbols, &sfmod4, MIB, &(ENB.CellRefP), bchRx, bchHest, &ENB);
 
+	//内存泄露检查
+	_CrtDumpMemoryLeaks();
 	return 0;
 }

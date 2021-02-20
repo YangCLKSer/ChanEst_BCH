@@ -10,7 +10,7 @@
       <TargetName> LTDC LCD</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
+      <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F429IGTx</Device>
@@ -186,7 +186,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\OBJ;..\USER;..\HALLIB\STM32F4xx_HAL_Driver\Inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\SDRAM;..\HARDWARE\KEY</IncludePath>
+              <IncludePath>..\CORE;..\OBJ;..\USER;..\HALLIB\STM32F4xx_HAL_Driver\Inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\SDRAM;..\HARDWARE\KEY;..\SOFT</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -591,14 +591,158 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>SOFT</GroupName>
+          <Files>
+            <File>
+              <FileName>Array_Ctrl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\Array_Ctrl.c</FilePath>
+            </File>
+            <File>
+              <FileName>BCHIndices.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\BCHIndices.c</FilePath>
+            </File>
+            <File>
+              <FileName>cc_decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\cc_decode.c</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\ch_esti.c</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_dct.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\ch_esti_dct.c</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_ls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\ch_esti_ls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_prseqGen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\ch_esti_prseqGen.c</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_rsGen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\ch_esti_rsGen.c</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_time_intp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\ch_esti_time_intp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ChannelEst.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\ChannelEst.c</FilePath>
+            </File>
+            <File>
+              <FileName>MIMO_detectRB.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\MIMO_detectRB.c</FilePath>
+            </File>
+            <File>
+              <FileName>PBCH_Decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\PBCH_Decode.c</FilePath>
+            </File>
+            <File>
+              <FileName>QPSK_demodulate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\QPSK_demodulate.c</FilePath>
+            </File>
+            <File>
+              <FileName>typedefs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SOFT\typedefs.c</FilePath>
+            </File>
+            <File>
+              <FileName>Array_Ctrl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\Array_Ctrl.h</FilePath>
+            </File>
+            <File>
+              <FileName>BCHIndices.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\BCHIndices.h</FilePath>
+            </File>
+            <File>
+              <FileName>cc_decode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\cc_decode.h</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\ch_esti.h</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_dct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\ch_esti_dct.h</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_ls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\ch_esti_ls.h</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_prseqGen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\ch_esti_prseqGen.h</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_rsGen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\ch_esti_rsGen.h</FilePath>
+            </File>
+            <File>
+              <FileName>ch_esti_time_intp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\ch_esti_time_intp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChanEst.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\ChanEst.h</FilePath>
+            </File>
+            <File>
+              <FileName>datadefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\datadefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMO_detectRB.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\MIMO_detectRB.h</FilePath>
+            </File>
+            <File>
+              <FileName>PBCH_Decode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\PBCH_Decode.h</FilePath>
+            </File>
+            <File>
+              <FileName>QPSK_demodulate.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\QPSK_demodulate.h</FilePath>
+            </File>
+            <File>
+              <FileName>typedefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SOFT\typedefs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>
-
-  <RTE>
-    <apis/>
-    <components/>
-    <files/>
-  </RTE>
 
 </Project>

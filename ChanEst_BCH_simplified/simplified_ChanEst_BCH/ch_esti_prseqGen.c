@@ -60,6 +60,8 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     {
         C->data[i] = (x1->data[i + Nc] + x2->data[i + Nc]) % 2;
     }
+    Free_int32(&x1);
+    Free_int32(&x2);
 }
 
 /*
