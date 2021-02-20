@@ -76,7 +76,7 @@ typedef struct {
 *编写日期：2021.02.20
 *版本号：V1.0
 *更改历史
-	日期      内容      更改者
+	日期          内容          更改者
 	2021.02.20   V1.0          杨昌林
 ********************************************************************************/
 extern struct_complex complexAdd(struct_complex a, struct_complex b);
@@ -92,7 +92,7 @@ extern struct_complex complexAdd(struct_complex a, struct_complex b);
 *编写日期：2021.02.20
 *版本号：V1.0
 *更改历史
-	日期      内容      更改者
+	日期          内容          更改者
 	2021.02.20   V1.0          杨昌林
 ********************************************************************************/
 extern struct_complex complexMinus(struct_complex a, struct_complex b);
@@ -108,7 +108,7 @@ extern struct_complex complexMinus(struct_complex a, struct_complex b);
 *编写日期：2021.02.20
 *版本号：V1.0
 *更改历史
-	日期      内容      更改者
+	日期          内容          更改者
 	2021.02.20   V1.0          杨昌林
 ********************************************************************************/
 extern struct_complex complexMulti(struct_complex a, struct_complex b);
@@ -124,7 +124,7 @@ extern struct_complex complexMulti(struct_complex a, struct_complex b);
 *编写日期：2021.02.20
 *版本号：V1.0
 *更改历史
-	日期      内容      更改者
+	日期          内容          更改者
 	2021.02.20   V1.0          杨昌林
 ********************************************************************************/
 extern struct_complex complexDiv(struct_complex a, struct_complex b);
@@ -139,7 +139,7 @@ extern struct_complex complexDiv(struct_complex a, struct_complex b);
 *编写日期：2021.02.20
 *版本号：V1.0
 *更改历史
-	日期      内容      更改者
+	日期          内容          更改者
 	2021.02.20   V1.0          杨昌林
 ********************************************************************************/
 extern struct_complex complexExp(struct_complex a);
@@ -154,7 +154,7 @@ extern struct_complex complexExp(struct_complex a);
 *编写日期：2021.02.20
 *版本号：V1.0
 *更改历史
-	日期      内容      更改者
+	日期          内容          更改者
 	2021.02.20   V1.0          杨昌林
 ********************************************************************************/
 extern double complexNorm(struct_complex a);
