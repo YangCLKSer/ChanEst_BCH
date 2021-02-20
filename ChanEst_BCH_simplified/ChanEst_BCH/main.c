@@ -7,8 +7,10 @@
 #include <crtdbg.h>  
 void main()
 {
+	//内存申请断点，结合头文件crtdbg.h，末尾_CrtDumpMemoryLeaks()函数使用;
 	//_CrtSetBreakAlloc(78);
-	//变量申请
+
+	/*-----------------变量申请--------------------*/
 	struct_ENB ENB;
 	int i, j, loop_ub;
 	int a, b;
@@ -20,8 +22,8 @@ void main()
 	int MIB[24];
 	struct_complex bchRx[240];
 	struct_complex bchHest[960];
-
-	//ENB数据初始化
+	
+	/*-------------------ENB数据初始化------------------*/
 	ENB.NDLRB = 6;
 	strcpy(ENB.DuplexMode, "TDD");
 	strcpy(ENB.CyclicPrefix, "Normal");
@@ -35,7 +37,7 @@ void main()
 	ENB.NFrame = 0;
 	ENB.CFI = 0;
 
-	//接收信号初始化
+	/*-------------------接收信号初始化------------------*/
 	Init_complex(&rxSigFreq, 2);
 	i = rxSigFreq->size[0] * rxSigFreq->size[1];
 	rxSigFreq->size[0] = 72;
@@ -49,6 +51,7 @@ void main()
 	
 
 	
+	//这里即可使用前项rxSigFreq进行赋值，替换文件读取
 
 	FILE* fp;
 	if ((fp = fopen("C:\\1D\\1SEU\\2020.09_USRP_E310\\C\\C_proj\\ChanEst_BCH_simplified\\simplified_ChanEst_BCH\\data\\rxSigFreq.txt", "r")) == NULL)
@@ -79,12 +82,13 @@ void main()
 	}
 	fclose(fp);
 
-
+	/*------------------信道估计-------------------*/
 	Init_complex(&chanEst, 3);
 	ChannelEst(chanEst, rxSigFreq, 0, 0, 0, 0, &ENB);
 	//printf("chanEst\n");
 	//Print_complex(chanEst);
 
+	/*-----------------PBCH解调--------------------*/
 	Init_int32(&bch_ind, 2);
 	BCHIndices(bch_ind, &ENB);
 	//printf("bch_ind\n");
