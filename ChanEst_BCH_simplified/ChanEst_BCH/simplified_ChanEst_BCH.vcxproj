@@ -24,6 +24,7 @@
     <ProjectGuid>{3700978f-9e7e-49c4-b0d8-41d4c300b953}</ProjectGuid>
     <RootNamespace>simplifiedChanEstBCH</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ChanEst_BCH</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

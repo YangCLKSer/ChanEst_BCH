@@ -2,25 +2,6 @@
 /* Include Files */
 #include "ch_esti_time_intp.h"
 
-/* Function Definitions */
-
-/*
- * Time interpolation of channel frequency response on ofdms without RS
- *  Abstract:
- *    This function is linear time interpolation for ofdms without rs.
- *  Input:
- *    hEst, the estimation results after ls sampling.
- *    locOFDMWithRS, locations of ofdms with rs.
- *  Output:
- *    hEst, channel freq estimation output after linear time interpolation.
- *  Reference:
- *    NULL.
- *  Author:
- *    Yang Yushan     2009-04-09
- *  Version History:
- *    Yang Yushan     2009-04-09      Created
- * ------------------------------------------------------------------------------%
- */
 void ch_esti_time_intp( ARRAY_complex * hEst, const  ARRAY_int32  * locOFDMWithRS)
 {
     int locN, i_ofdm, i;//后RS序列位置，当前时域位置，当前频域位置

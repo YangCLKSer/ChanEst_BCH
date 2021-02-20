@@ -2,14 +2,6 @@
 /* Include Files */
 #include "QPSK_demodulate.h"
 
-/*
-QPSK解调
-输入：
-    inSymbols：复数，接收数据
-    inPower：double，幅度信息
-输出：
-    outBits：解调软bit信息
-*/
 void QPSK_demodulate(double outBits[480],const struct_complex inSymbols[240], const double inPower[240])
 {
   int k;

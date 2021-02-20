@@ -11,8 +11,9 @@
 
 int main(void)
 {
-	u8 x=0,x_rec = 0;
-	u8 lcd_id[12];
+	u8 x=0;
+	u16 count=0;
+	u8 lcd_id[12],test_num[20];
 	struct_ENB ENB;
 	int i, j, loop_ub;
 	int a, b;
@@ -37,30 +38,28 @@ int main(void)
 	sprintf((char*)lcd_id,"LCD ID:%04X",lcddev.id);//将LCD ID打印到lcd_id数组。	
 	while(1)
 	{
+		count++;
 		x = 12;
-		if (x!=x_rec)
+		switch(x)
 		{
-			x_rec = x;
-			switch(x)
-			{
-				case 0:LCD_Clear(WHITE);break;
-				case 1:LCD_Clear(BLACK);break;
-				case 2:LCD_Clear(BLUE);break;
-				case 3:LCD_Clear(RED);break;
-				case 4:LCD_Clear(MAGENTA);break;
-				case 5:LCD_Clear(GREEN);break;
-				case 6:LCD_Clear(CYAN);break; 
-				case 7:LCD_Clear(YELLOW);break;
-				case 8:LCD_Clear(BRRED);break;
-				case 9:LCD_Clear(GRAY);break;
-				case 10:LCD_Clear(LGRAY);break;
-				case 11:LCD_Clear(BROWN);break;
-				default:LCD_Clear(WHITE);
-			}
+			case 0:LCD_Clear(WHITE);break;
+			case 1:LCD_Clear(BLACK);break;
+			case 2:LCD_Clear(BLUE);break;
+			case 3:LCD_Clear(RED);break;
+			case 4:LCD_Clear(MAGENTA);break;
+			case 5:LCD_Clear(GREEN);break;
+			case 6:LCD_Clear(CYAN);break; 
+			case 7:LCD_Clear(YELLOW);break;
+			case 8:LCD_Clear(BRRED);break;
+			case 9:LCD_Clear(GRAY);break;
+			case 10:LCD_Clear(LGRAY);break;
+			case 11:LCD_Clear(BROWN);break;
+			default:LCD_Clear(WHITE);
 		}
 		POINT_COLOR=RED;	  
 		LCD_ShowString(10,40,260,32,32,"Apollo STM32F4/F7"); 	
-		LCD_ShowString(10,80,240,24,24,"LTDC TEST");
+		sprintf((char*)test_num,"ChanEst TEST:%d",count);
+		LCD_ShowString(10,80,240,24,24,test_num);
 		LCD_ShowString(10,110,240,16,16,"ATOM@ALIENTEK");
 		LCD_ShowString(10,130,240,16,16,lcd_id);		//显示LCD ID	      					 
 		LCD_ShowString(10,150,240,12,12,"2021/2/16");	      					 
@@ -155,7 +154,7 @@ int main(void)
 		}
 		LCD_ShowString(10,230,240,12,12,"PBCH_Decode Start.");	
 		PBCH_Decode(bch_bits, pbch_symbols, &sfmod4, MIB, &(ENB.CellRefP), bchRx, bchHest, &ENB);
-		LCD_ShowString(10,230,240,12,12,"PBCH_Decode Done.");	
+		LCD_ShowString(10,250,240,12,12,"PBCH_Decode Done.");	
 		
 		
 		Free_complex(&rxSigFreq);

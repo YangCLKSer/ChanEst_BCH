@@ -54,7 +54,7 @@ void main()
 	//这里即可使用前项rxSigFreq进行赋值，替换文件读取
 
 	FILE* fp;
-	if ((fp = fopen("C:\\1D\\1SEU\\2020.09_USRP_E310\\C\\C_proj\\ChanEst_BCH_simplified\\simplified_ChanEst_BCH\\data\\rxSigFreq.txt", "r")) == NULL)
+	if ((fp = fopen("C:\\1D\\1SEU\\2020.09_USRP_E310\\C\\C_proj\\ChanEst_BCH_simplified\\ChanEst_BCH\\data\\rxSigFreq.txt", "r")) == NULL)
 	{
 		//printf("文件打开失败\n");
 		exit(0);
@@ -85,14 +85,14 @@ void main()
 	/*------------------信道估计-------------------*/
 	Init_complex(&chanEst, 3);
 	ChannelEst(chanEst, rxSigFreq, 0, 0, 0, 0, &ENB);
-	//printf("chanEst\n");
-	//Print_complex(chanEst);
+	printf("chanEst\n");
+	Print_complex(chanEst);
 
 	/*-----------------PBCH解调--------------------*/
 	Init_int32(&bch_ind, 2);
 	BCHIndices(bch_ind, &ENB);
-	//printf("bch_ind\n");
-	//Print_int32(bch_ind);
+	printf("bch_ind\n");
+	Print_int32(bch_ind);
 
 	//取BCH符号上的信道估计，bchHest = chanEst(:,:,bch_ind);
 	for (i = 0; i < chanEst->size[1]; i++) {

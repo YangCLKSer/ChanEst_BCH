@@ -1,18 +1,6 @@
 #pragma once
 #include "typedefs.h"
 
-/*
-后续的检查工作：
-	1.数据类型与数据处理函数的对应
-	2.数据结构是否符合要求
-	3.是否将中间变量Free
-	4.撰写Test_Main测试函数功能，可以通过txt文本或者其他的方式逐层测试
-*/
-/*
-复数加法
-输入：两个复数
-输出：复数，两复数相加
-*/
 struct_complex complexAdd(struct_complex a, struct_complex b)
 {
 	struct_complex result;
@@ -22,11 +10,6 @@ struct_complex complexAdd(struct_complex a, struct_complex b)
 	return result;
 }
 
-/*
-复数减法
-输入：两个复数
-输出：复数，第一个复数减第二个复数
-*/
 struct_complex complexMinus(struct_complex a, struct_complex b)
 {
 	struct_complex result;
@@ -36,11 +19,6 @@ struct_complex complexMinus(struct_complex a, struct_complex b)
 	return result;
 }
 
-/*
-复数乘法
-输入：两个复数
-输出：复数，两复数乘法
-*/
 struct_complex complexMulti(struct_complex a, struct_complex b)
 {
 	struct_complex result;
@@ -50,11 +28,6 @@ struct_complex complexMulti(struct_complex a, struct_complex b)
 	return result;
 }
 
-/*
-复数除法
-输入：两个复数
-输出：复数，第一个复数除以第二个复数
-*/
 struct_complex complexDiv(struct_complex a, struct_complex b)
 {
 	struct_complex result;
@@ -73,11 +46,6 @@ struct_complex complexDiv(struct_complex a, struct_complex b)
 	return result;
 }
 
-/*
-复数的e指数
-输入：复数
-输出：复数，复数的e指数
-*/
 struct_complex complexExp(struct_complex a)
 {
 	struct_complex result;
@@ -87,11 +55,6 @@ struct_complex complexExp(struct_complex a)
 	return result;
 }
 
-/*
-复数模
-输入：复数
-输出：double，复数的模
-*/
 double complexNorm(struct_complex a)
 {
 	double out;
