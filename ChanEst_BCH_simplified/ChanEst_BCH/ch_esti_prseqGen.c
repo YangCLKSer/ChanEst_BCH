@@ -1,14 +1,6 @@
 #pragma once
 #include "ch_esti_prseqGen.h"
 
-/*
-pr序列生成，Pseudo-random sequences defined by a length-31 Gold sequence.。
-输入：
-    lenC：序列长度
-    Cinit：初始化种子
-输出：
-    C：int32矩阵，pr序列
-*/
 void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
 {
 	int Nc = 1600;
@@ -64,15 +56,6 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     Free_int32(&x2);
 }
 
-/*
-十进制数转二进制bit序列
-输入：
-    input：输入十进制数
-    bit_num：输出序列位数
-    type：输出序列是否翻转，由于没有使用，遂暂未实现翻转
-输出：
-    out：int数组，二进制数bit位
-*/
 void de2bi(ARRAY_int32* out, int input, int bit_num, int type)
 {
     int mid, loop_ub, i;

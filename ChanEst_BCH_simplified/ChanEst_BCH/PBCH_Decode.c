@@ -5,19 +5,6 @@
 
 /* Function Declarations */
 
-/*
-PBCH解码
-输入：
-    sym：复数，接收信号
-    chanEst：复数，PBCH信道估计
-    enb：小区信息
-输出：
-    bits：double，输出软bit
-    symbols：复数，检出符号
-    nfmod4：int指针，子帧号
-    trblk：int，MIB信息
-    cellrefp：int，天线数
-*/
 void PBCH_Decode(double bits[480], struct_complex symbols[240], int* nfmod4, int trblk[24],
     int* cellrefp, struct_complex sym[240], struct_complex chanEst[960], struct_ENB* enb)
 {
@@ -46,18 +33,6 @@ void PBCH_Decode(double bits[480], struct_complex symbols[240], int* nfmod4, int
         *cellrefp = 0;
 }
 
-/*
-bch解码
-输入：
-    demod：double，QPSK解调符号
-    NID：int，小区号
-    NumTxAnt：int，天线数
-输出：
-    sbits：double，解调软bit
-    nfmod4：int指针，子帧号
-    trblk：int，MIB信息
-    sucess：int指针，解码成功标志
-*/
 void bch_decode(double sbits[480], int* nfmod4,
     int trblk[24], int* sucess, double demod[480], int NID, int NumTxAnt)
 {
@@ -97,13 +72,6 @@ void bch_decode(double sbits[480], int* nfmod4,
     }
 }
 
-/*
-
-输入：
-
-输出：
-
-*/
 void Sync_PRsqn_genr(int PRsqnC[1920], int Cinit)
 {
     int Nc = 1600, PRlength = 1920;

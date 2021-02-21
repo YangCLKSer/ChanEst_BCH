@@ -1,13 +1,6 @@
 #pragma once
 #include "BCHIndices.h"
 
-/*
-BCH符号位置
-输入：
-    enb：小区信息
-输出：
-    index_data：int矩阵，符号位置
-*/
 void BCHIndices(ARRAY_int32* index_data, struct_ENB* enb)
 {
     int Bshift, counter, out_c, b_counter, res, trueCount, k, i;

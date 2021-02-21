@@ -1,19 +1,6 @@
 #pragma once
 #include "ch_esti_dct.h"
-/*
-DCT frequency interpolation of channel frequency response on ofdms with RS
-Abstract:
-  This function is dct frequency interpolation for ofdms with rs.
-Input:
-  hEst, the estimation results after ls sampling.
-  locOFDMWithRS, locations of ofdms with rs.
-  locRS, locations of rs in ofdms with rs.
-  Pc, the energy extract coefficient.
-Output:
-  hEst, channel freq estimation output after dct interpolation.
-Reference:
-  NULL.
-------------------------------------------------------------------------------*/
+
 void ch_esti_dct(ARRAY_complex* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* locRS, double Pc)
 {
 	int numOFDM, numSym, numPc, numRS,n,i,loop_ub, OFDMrow,RSrow;
@@ -123,7 +110,6 @@ void ch_esti_dct(ARRAY_complex* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* l
 	
 }
 
-//逆dct变换
 void ch_esti_eidct(ARRAY_complex* hEst, ARRAY_complex* y, int m,int row)
 {
 	int i, k,N,loop_ub;
@@ -166,7 +152,6 @@ void ch_esti_eidct(ARRAY_complex* hEst, ARRAY_complex* y, int m,int row)
 	}
 }
 
-//DCT-II变换，复数DCT变换相当于对实部复部分别变换，注意公式中n，k是1~m，这里是0~m-1
 void dct(ARRAY_complex* gEst, ARRAY_complex* temphEst)
 {
 	int n, m,i ,loop_ub, k;

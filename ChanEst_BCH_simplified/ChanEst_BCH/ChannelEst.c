@@ -1,15 +1,6 @@
 #pragma once
 #include "ChanEst.h"
 
-/*
-OFDM信道估计
-输入：
-    mmseA1，mmseA2，mmseB1，mmseB2：无意义，最小二乘算法未使用
-    rcvSigFreq：复数矩阵，接收信号
-    ENB：小区信息
-输出：
-    TempChan：复数矩阵，信道估计
-*/
 void ChannelEst(ARRAY_complex* TempChan, ARRAY_complex* rcvSigFreq, double mmseA1, \
     double mmseB1, double mmseA2, double mmseB2, struct_ENB* ENB)
 {
