@@ -54,6 +54,8 @@
 #include "BCHIndices.h"
 #include "PBCH_Decode.h"
 
+void CellSearch(void);
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
