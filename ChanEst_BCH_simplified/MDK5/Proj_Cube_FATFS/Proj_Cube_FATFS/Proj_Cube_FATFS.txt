@@ -1,0 +1,57 @@
+Configuration	Proj_Cube_FATFS
+STM32CubeMX 	4.14.0
+Date	02/24/2021
+MCU	STM32F429IGTx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+SDIO	SD 4 bits Wide bus	SDIO_CK	PC12
+SDIO	SD 4 bits Wide bus	SDIO_CMD	PD2
+SDIO	SD 4 bits Wide bus	SDIO_D0	PC8
+SDIO	SD 4 bits Wide bus	SDIO_D1	PC9
+SDIO	SD 4 bits Wide bus	SDIO_D2	PC10
+SDIO	SD 4 bits Wide bus	SDIO_D3	PC11
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+USART1	Asynchronous	USART1_RX	PA10
+USART1	Asynchronous	USART1_TX	PA9
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+117	PC8	SDIO_D0	
+118	PC9	SDIO_D1	
+120	PA9	USART1_TX	
+121	PA10	USART1_RX	
+139	PC10	SDIO_D2	
+140	PC11	SDIO_D3	
+141	PC12	SDIO_CK	
+144	PD2	SDIO_CMD	
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : Proj_Cube_FATFS
+Project Folder : C:\1D\1SEU\2020.09_USRP_E310\C\C_proj\ChanEst_BCH_simplified\MDK5\Proj_Cube_FATFS\Proj_Cube_FATFS
+Toolchain / IDE : MDK-ARM V5
+Firmware Package Name and Version : STM32Cube FW_F4 V1.11.0
+
+
+Code Generation Settings : 
+STM32Cube Firmware Library Package : Copy all used libraries into the project folder
+Generate peripheral initialization as a pair of '.c/.h' files per IP : No
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : No
+
+
+Toolchains Settings : 
+Compiler Optimizations : Balanced Size/Speed
+
+
+
+
+
+

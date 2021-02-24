@@ -1,4 +1,20 @@
-#include "main.h"
+//#include "main.h"
+#include "stm32f4xx_hal.h"
+#include "sys.h"
+#include "delay.h"
+#include "usart.h"
+#include "led.h"
+#include "key.h"
+#include "lcd.h"
+#include "sdram.h"
+
+#include <stdlib.h>
+#include "ChanEst.h"
+#include "BCHIndices.h"
+#include "PBCH_Decode.h"
+
+void CellSearch(void);
+
 /************************************************
  ALIENTEK 阿波罗STM32F429开发板实验14
  LTDC LCD实验-HAL库函数版
@@ -15,17 +31,6 @@ int main(void)
 	u16 count=0,times=0;
 	u8 lcd_id[12],test_num[20];
 	//ARRAY_complex* rxSigFreq;
-	/*struct_ENB ENB;
-	int a, b;
-	int i, j, loop_ub;
-	ARRAY_complex* chanEst, * rxSigFreq;
-	ARRAY_int32* bch_ind;
-	double bch_bits[480];
-	struct_complex pbch_symbols[240];
-	int sfmod4;
-	int MIB[24];
-	struct_complex bchRx[240];
-	struct_complex bchHest[960];*/
 	
 	HAL_Init();											//初始化HAL库
 	Stm32_Clock_Init(360,25,2,8);   //设置时钟,180Mhz
@@ -40,6 +45,8 @@ int main(void)
 	sprintf((char*)lcd_id,"LCD ID:%04X",lcddev.id);//将LCD ID打印到lcd_id数组。	
 	while(1)
 	{
+		LED0=!LED0;	 
+		delay_ms(10);	
 		count++;
 		x = 1;
 		switch(x)
@@ -57,11 +64,7 @@ int main(void)
 		LCD_ShowString(10,150,240,12,12,"2021/2/16");
 		printf("\r\n%s\r\n",test_num);
 		
-		x++;
-		if(x==12)
-			x=0;      
-		LED0=!LED0;	 
-		delay_ms(10);	
+		
 		
 		if(USART_RX_STA&0x8000)
 		{					   
@@ -88,6 +91,7 @@ int main(void)
 		
 	}
 }
+
 
 void CellSearch(void)
 {

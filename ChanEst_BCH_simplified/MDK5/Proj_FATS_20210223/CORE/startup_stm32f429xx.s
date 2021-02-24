@@ -45,10 +45,8 @@
 ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-;4KB
-;Stack_Size      EQU     0x400;			
 ;16KB
-Stack_Size      EQU     0xF000;			
+Stack_Size      EQU     0x2000;		
 
                 AREA    STACK, NOINIT, READWRITE, ALIGN=3
 Stack_Mem       SPACE   Stack_Size
@@ -59,10 +57,8 @@ __initial_sp
 ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-;512B
-;Heap_Size      EQU     0x200;			
 ;16KB
-Heap_Size      EQU     0xF000;	
+Heap_Size      EQU     0x1000;	
 
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base
