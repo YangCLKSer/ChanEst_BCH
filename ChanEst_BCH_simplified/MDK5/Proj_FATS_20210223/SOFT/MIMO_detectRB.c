@@ -3,27 +3,6 @@
 #include "MIMO_detectRB.h"
 
 /* Function Definitions */
-
-/*
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- *  MODULE NAME ：mld2sfbc
- *  ABSTRACT：ML Detection for SFBC
- *
- *  Input:
- *    Received: received signal
- *    mimoCH:  channel parameters
- *
- *  Output:
- *    Detected: detected symbols
- *    ampd: ampd of equivalent fading channel
- *
- *  VERSION： V1.0
- *  AUTHOR:   Wang Yan 2009-4-13
- *
- *  REVISION HISTORY:
- *   V1.0 Wang Yan 2009-5-22  Created
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- */
 static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
   double Detected[120], double ampd[120])
 {
@@ -107,26 +86,6 @@ static void b_mld2sfbc(const double Received[120], const double mimoCH[240],
   }
 }
 
-/*
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- *  MODULE NAME ：mld2sfbc
- *  ABSTRACT：ML Detection for SFBC
- *
- *  Input:
- *    Received: received signal
- *    mimoCH:  channel parameters
- *
- *  Output:
- *    Detected: detected symbols
- *    ampd: ampd of equivalent fading channel
- *
- *  VERSION： V1.0
- *  AUTHOR:   Wang Yan 2009-4-13
- *
- *  REVISION HISTORY:
- *   V1.0 Wang Yan 2009-5-22  Created
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- */
 static void mld2sfbc(const struct_complex Received[240], const struct_complex mimoCH[960],
                      double Detected[240], double ampd[240])
 {
@@ -139,7 +98,6 @@ static void mld2sfbc(const struct_complex Received[240], const struct_complex mi
   struct_complex tmpCH[8];
   int b_tmpCH_tmp;
 
-  /*  */
   memset(&Detected[0], 0, 240U * sizeof(double));
   for (idxStrm = 0; idxStrm < 120; idxStrm++) {
     i = (idxStrm + 1) << 1;
@@ -163,7 +121,6 @@ static void mld2sfbc(const struct_complex Received[240], const struct_complex mi
     Detected[Detected_tmp + 1] = (-tmpCH[1].re * Received[i1].re - -tmpCH[1].im *
       -Received[i1].im) + (tmpCH[4].re * Received[i].re - -tmpCH[4].im *
       Received[i].im);
-    //存疑
     ampd[i1] = complexNorm(tmpCH[0]);
     ampd[i] = complexNorm(tmpCH[4]);
   }
@@ -174,26 +131,6 @@ static void mld2sfbc(const struct_complex Received[240], const struct_complex mi
   }
 }
 
-/*
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- *  MODULE NAME ：mld4sfbcfstd
- *  ABSTRACT：ML Detection for SFBC-FSTD
- *
- *  Input:
- *    Received: received signal
- *    mimoCH:  channel parameters
- *
- *  Output:
- *    Detected: detected symbols
- *    ampd: ampd of equivalent fading channel
- *
- *  VERSION： V1.0
- *  AUTHOR:   Wang Yan 2009-5-22
- *
- *  REVISION HISTORY:
- *    V1.0 Wang Yan 2009-5-24  Created
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- */
 static void mld4sfbcfstd(const struct_complex Received[240], const struct_complex mimoCH[960],
   double Detected[240], double ampd[240])
 {
@@ -263,7 +200,7 @@ static void mld4sfbcfstd(const struct_complex Received[240], const struct_comple
   }
 }
 
-/*void mrc(struct_complex Detected_RB[240],double ampd[240], const struct_complex RxData[240], const struct_complex equCH[960])
+void mrc(struct_complex Detected_RB[240],double ampd[240], const struct_complex RxData[240], const struct_complex equCH[960])
 {
     double im,re;
     int i_strm;
@@ -276,33 +213,10 @@ static void mld4sfbcfstd(const struct_complex Received[240], const struct_comple
         Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
         Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
     }
-}*/
+}
 
-/*
- * detectRB
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- *  NAME: detectRB
- *  PURPOSE: 处于相同子帧相同频率的两个资源块内的数据的检测
- *
- *  Input:
- *    RxData: 资源解映射后的接收数据, 2维，维度1表示接收天线数，维度2表示接收数据序号
- *    equCH: 等效信道, 3维，维度1表示接收天线序号，维度2表示层序号，维度3表示接收数据序号
- *    methodDetect: 检测算法选择, 整数，0, 1, … ,6。0：最大比合并或者匹配滤波；1：SFBC的检测；2：SFBC-FSTD的检测；3：ZF；4：MMSE；5：ZF-SIC；6：MMSE-SIC
- *    mod_mode: 调制方式, 整数，4, 16, 64
- *
- *  Output:
- *    Detected_RB: 检测出的符号，2维，维度1表示层数，维度2表示符号序号
- *    ampd: 幅度信息，用于QAM解调, 2维，维度1表示层数，维度2表示符号序号
- *
- *  VERSION： V1.0
- *    AUTHOR: Wang Yan 2009-5-22
- *
- *  REVISION HISTORY:
- *   V1.0 Wang Yan 2009-5-24  Created
- * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- */
 void MIMO_detectRB(struct_complex Detected_RB[240], double ampd[240], const struct_complex RxData[240], 
-    const struct_complex equCH[960], double methodDetect)
+    const struct_complex equCH[960], int methodDetect)
 {
     double b_Detected_RB[240];
     int i_strm;
@@ -322,45 +236,30 @@ void MIMO_detectRB(struct_complex Detected_RB[240], double ampd[240], const stru
     /*  MMSE-OSIC           MMSE              optimal           ZF        6 */
     /* %%%%%%%%%%%%%%%%%%%%%%%%%%%% DETECTION MODE END %%%%%%%%%%%%%%%%%%%%%%% */
     /*  */
-    switch ((int)methodDetect) {
+    switch (methodDetect) {
     case 0:
-    for (i_strm = 0; i_strm < 240; i_strm++) {
-        re_tmp = i_strm;
-        im = complexNorm(equCH[re_tmp]);
-        ampd[i_strm] = im;
-        re = equCH[re_tmp].re / im;
-        im = -equCH[re_tmp].im / im;
-        Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
-        Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
-    }
+        mrc(Detected_RB, ampd, RxData, equCH);
+
     break;
 
     case 1:
-    mld2sfbc(RxData, equCH, b_Detected_RB, ampd);
-    for (i_strm = 0; i_strm < 240; i_strm++) {
-        Detected_RB[i_strm].re = b_Detected_RB[i_strm];
-        Detected_RB[i_strm].im = 0.0;
-    }
+        mld2sfbc(RxData, equCH, b_Detected_RB, ampd);
+        for (i_strm = 0; i_strm < 240; i_strm++) {
+            Detected_RB[i_strm].re = b_Detected_RB[i_strm];
+            Detected_RB[i_strm].im = 0.0;
+        }
     break;
 
     case 2:
-    mld4sfbcfstd(RxData, equCH, b_Detected_RB, ampd);
-    for (i_strm = 0; i_strm < 240; i_strm++) {
-        Detected_RB[i_strm].re = b_Detected_RB[i_strm];
-        Detected_RB[i_strm].im = 0.0;
-    }
+        mld4sfbcfstd(RxData, equCH, b_Detected_RB, ampd);
+        for (i_strm = 0; i_strm < 240; i_strm++) {
+            Detected_RB[i_strm].re = b_Detected_RB[i_strm];
+            Detected_RB[i_strm].im = 0.0;
+        }
     break;
 
     default:
-    for (i_strm = 0; i_strm < 240; i_strm++) {
-            re_tmp = i_strm;
-            im = complexNorm(equCH[re_tmp]);
-            ampd[i_strm] = im;
-            re = equCH[re_tmp].re / im;
-            im = -equCH[re_tmp].im / im;
-            Detected_RB[i_strm].re = re * RxData[i_strm].re - im * RxData[i_strm].im;
-            Detected_RB[i_strm].im = re * RxData[i_strm].im + im * RxData[i_strm].re;
-    }
+        mrc(Detected_RB, ampd, RxData, equCH);
     break;
     }
 }

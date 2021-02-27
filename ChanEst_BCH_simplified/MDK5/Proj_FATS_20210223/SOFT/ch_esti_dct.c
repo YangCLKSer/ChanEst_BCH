@@ -110,7 +110,6 @@ void ch_esti_dct(ARRAY_complex* hEst, ARRAY_int32* locOFDMWithRS, ARRAY_int32* l
 	
 }
 
-//逆dct变换
 void ch_esti_eidct(ARRAY_complex* hEst, ARRAY_complex* y, int m,int row)
 {
 	int i, k,N,loop_ub;
@@ -153,7 +152,6 @@ void ch_esti_eidct(ARRAY_complex* hEst, ARRAY_complex* y, int m,int row)
 	}
 }
 
-//DCT-II变换，复数DCT变换相当于对实部复部分别变换，注意公式中n，k是1~m，这里是0~m-1
 void dct(ARRAY_complex* gEst, ARRAY_complex* temphEst)
 {
 	int n, m,i ,loop_ub, k;

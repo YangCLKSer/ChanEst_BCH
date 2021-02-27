@@ -572,9 +572,7 @@ int cc_decode(double *d_decode_out, double *decode_in, double d_msg_len, double 
 					decode_out_crc[msg_len+i] = decode_out_crc[msg_len+i] ^ x_ant4[i];
 				}
 				break;
-		default: printf("error transmit antenna ports number. quit \n");
-				//_getch();exit(0);
-				break;
+		default: printf("error transmit antenna ports number. quit \n");break;//_getch();exit(0);
 		}
 	}
 	else	//scramble for dci

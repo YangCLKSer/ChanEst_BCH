@@ -46,7 +46,7 @@
 ; </h>
 
 ;16KB
-Stack_Size      EQU     0x2000;		
+Stack_Size      EQU     0xf000;		
 
                 AREA    STACK, NOINIT, READWRITE, ALIGN=3
 Stack_Mem       SPACE   Stack_Size
@@ -58,7 +58,7 @@ __initial_sp
 ; </h>
 
 ;16KB
-Heap_Size      EQU     0x1000;	
+Heap_Size      EQU     0xf000;	
 
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base

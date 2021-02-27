@@ -52,8 +52,8 @@ void ch_esti_prseqGen(ARRAY_int32* C, int lenC, int Cinit)
     {
         C->data[i] = (x1->data[i + Nc] + x2->data[i + Nc]) % 2;
     }
-		Free_int32(&x1);
-		Free_int32(&x2);
+    Free_int32(&x1);
+    Free_int32(&x2);
 }
 
 void de2bi(ARRAY_int32* out, int input, int bit_num, int type)
@@ -76,9 +76,4 @@ void de2bi(ARRAY_int32* out, int input, int bit_num, int type)
             mid = mid - (int)(1 << (loop_ub - i - 1));
         }
     }
-    /*if (type)
-        {
-
-        }*/
-
 }

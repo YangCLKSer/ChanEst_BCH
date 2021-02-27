@@ -1,4 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
+FATFS.IPParameters=_USE_FIND,_USE_FORWARD
+FATFS._USE_FIND=1
+FATFS._USE_FORWARD=1
 File.Version=6
 KeepUserPlacement=false
 Mcu.Family=STM32F4

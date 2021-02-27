@@ -112,12 +112,12 @@ void ch_esti(ARRAY_complex* hEst, ARRAY_complex* RxDataBCE, struct_ENB* enb)
 				
 		Pc = 0.1;
 
-		//printf("locOFDMWithRS\n");
-		//Print_int32(locOFDMWithRS);
-		//printf("locRS\n");
-		//Print_int32(locRS);
-		//printf("valRS\n");
-		//Print_complex(valRS);
+		printf("locOFDMWithRS\n");
+		Print_int32(locOFDMWithRS);
+		printf("locRS\n");
+		Print_int32(locRS);
+		printf("valRS\n");
+		Print_complex(valRS);
 		for (n = 0; n < numRxAnt; n++)
 		{
 			Init_complex(&RxData, 2);
@@ -138,24 +138,24 @@ void ch_esti(ARRAY_complex* hEst, ARRAY_complex* RxDataBCE, struct_ENB* enb)
 				}	
 			}
 
-			//printf("RxData\n");
-			//Print_complex(RxData);
+			printf("RxData\n");
+			Print_complex(RxData);
 
 			Init_complex(&temphEst, 2);
 			//LS估计
 			ch_esti_ls(temphEst, RxData, locOFDMWithRS, locRS, valRS);
-			//printf("temphEst ch_esti_ls\n");
-			//Print_complex(temphEst);
+			printf("temphEst ch_esti_ls\n");
+			Print_complex(temphEst);
 
 			//dct插值
 			ch_esti_dct(temphEst, locOFDMWithRS, locRS, Pc);
-			//printf("temphEst ch_esti_dct\n");
-			//Print_complex(temphEst);
+			printf("temphEst ch_esti_dct\n");
+			Print_complex(temphEst);
 
 			//时域插值
 			ch_esti_time_intp(temphEst, locOFDMWithRS);
-			//printf("temphEst ch_esti_time_intp\n");
-			//Print_complex(temphEst);
+			printf("temphEst ch_esti_time_intp\n");
+			Print_complex(temphEst);
 
 
 			//reshape
@@ -166,8 +166,8 @@ void ch_esti(ARRAY_complex* hEst, ARRAY_complex* RxDataBCE, struct_ENB* enb)
 				hEst->data[(n + idxAntPort * numRxAnt) * Len + i].im = \
 					temphEst->data[i].im;
 			}
-			//printf("hEst ch_esti\n");
-			//Print_complex(hEst);
+			printf("hEst ch_esti\n");
+			Print_complex(hEst);
 		}
 		Free_int32(&locOFDMWithRS);
 		Free_int32(&locRS);

@@ -1,14 +1,6 @@
 #pragma once
 #include "ch_esti_rsGen.h"
 
-
-
-
-/*------------------------ch_esti_rsGen.m---------------------------*/
-            /* ------------------------------------------------------------------------------% */
-            /* numMaxRBDL = 110; a const defined by 3GPP LTE Downlink */
-            /* NCP = 1; % normal CP */
-            /* numSymDL = 7; */
 void ch_esti_rsGen(ARRAY_int32* locRS,ARRAY_complex* valRS,int idxSlot, int idxSym, int NID, int idxAntPort,
     int numRBDL, int numSymDL, int NCP)
 {

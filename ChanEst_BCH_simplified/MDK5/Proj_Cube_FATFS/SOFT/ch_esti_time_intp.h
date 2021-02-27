@@ -1,0 +1,7 @@
+#pragma once
+#include "typedefs.h"
+#include "Array_Ctrl.h"
+#include "datadefs.h"
+#include <math.h>
+
+void ch_esti_time_intp(ARRAY_complex* hEst, const  ARRAY_int32 * locOFDMWithRS);

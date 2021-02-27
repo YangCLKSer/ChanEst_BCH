@@ -1,20 +1,17 @@
 #pragma once
-/*
- * Academic License - for use in teaching, academic research, and meeting
- * course requirements at degree granting institutions only.  Not for
- * government, commercial, or other organizational use.
- * File: BCHIndices_emxutil.c
- *
- * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 26-Dec-2020 21:05:29
- */
-
  /* Include Files */
 #include "Array_Ctrl.h"
 
 
 /* Function Definitions */
 
+/*
+矩阵内存申请
+输入：
+    oldNumel：矩阵原内存占用大小
+输出：
+    emxArray：矩阵指针
+*/
 /*
  * Arguments    : emxArray_complex_T *emxArray
  *                int oldNumel
@@ -208,6 +205,12 @@ void EnsureCapacity_uint32(ARRAY_uint32* emxArray, int oldNumel)
 }
 
 /*
+释放矩阵
+输入：
+输出：
+    pEmxArray：矩阵指针变量的指针
+*/
+/*
  * Arguments    : emxArray_complex_T **pEmxArray
  * Return Type  : void
  */
@@ -276,6 +279,13 @@ void Free_uint32(ARRAY_uint32** pEmxArray)
     }
 }
 
+/*
+矩阵初始化
+输入：
+    numDimensions：矩阵维度
+输出：
+    pEmxArray：矩阵指针变量的指针
+*/
 /*
  * Arguments    : emxArray_complex_T **pEmxArray
  *                int numDimensions
@@ -360,6 +370,12 @@ void Init_uint32(ARRAY_uint32** pEmxArray, int numDimensions)
     }
 }
 
+/*
+矩阵元素输出
+输入：
+    pEmxArray：矩阵指针
+输出：
+*/
 void Print_complex(ARRAY_complex* pEmxArray)
 {
     int i, j;
@@ -440,6 +456,12 @@ void Print_real(ARRAY_real* pEmxArray)
     printf("\n");
 }
 
+/*
+矩阵置零
+输入：
+    pEmxArray：矩阵指针
+输出：
+*/
 void Zeros_complex(ARRAY_complex* pEmxArray)
 {
     int loop_ub, i;

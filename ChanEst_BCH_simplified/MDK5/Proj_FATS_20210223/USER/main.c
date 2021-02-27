@@ -16,11 +16,13 @@
 #include "ftl.h" 
 
 #include <stdlib.h>
+//#include <stdio.h>
 #include "ChanEst.h"
 #include "BCHIndices.h"
 #include "PBCH_Decode.h"
 
 void CellSearch(ARRAY_complex* rxSigFreq);
+void data_read(ARRAY_complex* rxSigFreq);
 /************************************************
  ALIENTEK 阿波罗STM32F429开发板实验41
  FATFS实验-HAL库函数版
@@ -34,9 +36,10 @@ void CellSearch(ARRAY_complex* rxSigFreq);
 int main(void)
 {
  	u32 total,free;
-	u8 t=0;	
+	u32 t=0;	
 	u8 res=0;
 	u16 i,j,loop_ub;
+	u8 test_num[20],lcd_id[12];
 	ARRAY_complex* rxSigFreq;
 	
 	Init_complex(&rxSigFreq, 2);
@@ -50,25 +53,26 @@ int main(void)
 		rxSigFreq->data[i].im = 0.0;
 	}
 	
-    HAL_Init();                     //初始化HAL库   
-    Stm32_Clock_Init(360,25,2,8);   //设置时钟,180Mhz
-    delay_init(180);                //初始化延时函数
-    uart_init(115200);              //初始化USART
-    usmart_dev.init(90);
-    LED_Init();                     //初始化LED 
-    KEY_Init();                     //初始化按键
-    SDRAM_Init();                   //SDRAM初始化
-    LCD_Init();                     //LCD初始化
+	HAL_Init();                     //初始化HAL库   
+	Stm32_Clock_Init(360,25,2,8);   //设置时钟,180Mhz
+	delay_init(180);                //初始化延时函数
+	uart_init(115200);              //初始化USART
+	usmart_dev.init(90);
+	LED_Init();                     //初始化LED 
+	KEY_Init();                     //初始化按键
+	SDRAM_Init();                   //SDRAM初始化
+	LCD_Init();                     //LCD初始化
 	W25QXX_Init();				    //初始化W25Q256
- 	//my_mem_init(SRAMIN);		    //初始化内部内存池
+	my_mem_init(SRAMIN);		    //初始化内部内存池
 	my_mem_init(SRAMEX);		    //初始化外部内存池
 	my_mem_init(SRAMCCM);		    //初始化CCM内存池 
-   	POINT_COLOR=RED;
+	POINT_COLOR=RED;
 	LCD_ShowString(30,50,200,16,16,"Apollo STM32F4/F7"); 
 	LCD_ShowString(30,70,200,16,16,"FATFS TEST");	
 	LCD_ShowString(30,90,200,16,16,"ATOM@ALIENTEK");
 	LCD_ShowString(30,110,200,16,16,"2016/1/16");	 	 
 	LCD_ShowString(30,130,200,16,16,"Use USMART for test");	      
+	sprintf((char*)lcd_id,"LCD ID:%04X",lcddev.id);
  	while(SD_Init())//检测不到SD卡
 	{
 		LCD_ShowString(30,150,200,16,16,"SD Card Error!");
@@ -77,9 +81,9 @@ int main(void)
 		delay_ms(500);
 		LED0=!LED0;//DS0闪烁
 	}
-    FTL_Init();
+	FTL_Init();
  	exfuns_init();							//为fatfs相关变量申请内存				 
-  	f_mount(fs[0],"0:",1); 					//挂载SD卡 
+	f_mount(fs[0],"0:",1); 					//挂载SD卡 
  	res=f_mount(fs[1],"1:",1); 				//挂载FLASH.	
 	if(res==0X0D)//FLASH磁盘,FAT文件系统错误,重新格式化FLASH
 	{
@@ -120,9 +124,9 @@ int main(void)
  	LCD_ShowNum(30+8*14,170,total>>10,5,16);	//显示SD卡总容量 MB
  	LCD_ShowNum(30+8*14,190,free>>10,5,16);     //显示SD卡剩余容量 MB			    
 	
-	FIL* fp;
 	FRESULT file_result;
-	file_result = f_open(fp,"rxSigFreq.txt", FA_READ);
+	FIL * fp;
+	file_result = mf_open("rxSigFreq.txt", FA_READ);
 	if (file_result)//0为成功
 	{
 		printf("File Open Failed\r\n");
@@ -131,34 +135,117 @@ int main(void)
 	else
 	{
 		printf("File Opened\r\n");
-
-		for (i = 0; i < 72 * 2; i++)
-		{
-			for (j = 0; j < 14; j++)
-			{
-				if (i < 72)
-				{
-					//fscanf(fp, "%lf\r\n", &rxSigFreq->data[rxSigFreq->size[1] * i + j].re);
-					//printf("%.6lf,\r\n", rxSigFreq->data[rxSigFreq->size[1] * i + j].re);
-				}
-				else
-				{
-					//fscanf(fp, "%lf\r\n", &rxSigFreq->data[rxSigFreq->size[1] * (i - 72) + j].im);
-					//printf("%.6lf,\r\n", rxSigFreq->data[rxSigFreq->size[1] * (i - 72) + j].im);
-				}
-			}
-		}
+		data_read(rxSigFreq);
 	}
-	f_close(fp);
+	mf_close();
 	printf("File Closed.\r\n");
 	while(1)
 	{
 		t++; 
 		delay_ms(200);		 			   
 		LED0=!LED0;
+		switch(1)
+		{
+			case 0:LCD_Clear(WHITE);break;
+			case 1:LCD_Clear(BLACK);break;
+			default:LCD_Clear(WHITE);
+		}
+		POINT_COLOR=BLACK;	  
+		LCD_ShowString(10,40,260,32,32,"Apollo STM32F4/F7"); 	
+		sprintf((char*)test_num,"ChanEst TEST:%d",t);
+		LCD_ShowString(10,80,240,24,24,test_num);
+		LCD_ShowString(10,110,240,16,16,"ATOM@ALIENTEK");
+		LCD_ShowString(10,130,240,16,16,lcd_id);		//显示LCD ID	      					 
+		LCD_ShowString(10,150,240,12,12,"2021/2/16");
+		printf("\r\n%s\r\n",test_num);
 		
 		CellSearch(rxSigFreq);
 	} 
+	
+	Free_complex(&rxSigFreq);
+}
+
+void data_read(ARRAY_complex* rxSigFreq)
+{
+	int count=0,len=0,i;
+	char str[1000],*p_str,*p_r,num[20];
+	double mid;
+	p_str = str;
+	len = 0;
+	while(count<2010)
+	{
+		//将缓存中字符串复制到待处理字符串尾
+		mf_read(512);
+		strcpy(str+len,fatbuf);
+		len += 512;
+		//这时p_str指向字符串头，即改为数字头指针
+		p_str = str;
+		//处理到待处理字符串长度小于20，则再读取
+		while(len>20 && count<2010)
+		{
+			
+			//找到数字末尾，并将当前数字复制到num中进行转换
+			p_r = strchr(p_str,'\r');
+			for(i=0;i<p_r-p_str;i++)
+			{
+				num[i] = p_str[i];
+			}
+			num[p_r-p_str]='\0';
+			//字符串结构为”数字\r\n数字“因此\r指针+2后指向下一个数字
+			len -= p_r-p_str+2;
+			p_str = p_r+2;
+			
+			//矩阵赋值
+			mid = atof(num);
+			//printf("%e\r\n",mid);
+			if (count<1008)
+			{
+				rxSigFreq->data[count].re = mid;
+			}
+			else
+			{
+				rxSigFreq->data[count-1008].im = mid;
+			}
+			count++;
+		}
+		//将未处理字符移动到str前端
+		strcpy(str,p_str);
+	}
+	
+	//处理最后的字符串
+	mf_read(512);
+	strcpy(str+len,fatbuf);
+	len += 512;
+	//这时p_str指向字符串头，即改为数字头指针
+	p_str = str;
+	while(count<2016)
+	{
+		//这时p_str指向字符串头，即改为数字头指针
+		//找到数字末尾，并将当前数字复制到num中进行转换
+		p_r = strchr(p_str,'\r');
+		for(i=0;i<p_r-p_str;i++)
+		{
+			num[i] = p_str[i];
+		}
+		num[p_r-p_str]='\0';
+		//字符串结构为”数字\r\n数字“因此\r指针+2后指向下一个数字
+		len -= p_r-p_str+2;
+		p_str = p_r+2;
+		
+		//矩阵赋值
+		mid = atof(num);
+		//printf("%e\r\n",mid);
+		if (count<1008)
+		{
+			rxSigFreq->data[count].re = mid;
+		}
+		else
+		{
+			rxSigFreq->data[count-1008].im = mid;
+		}
+		count++;
+	}
+	Print_complex(rxSigFreq);
 }
 
 void CellSearch(ARRAY_complex* rxSigFreq)
@@ -199,16 +286,16 @@ void CellSearch(ARRAY_complex* rxSigFreq)
 	printf("ChannelEst Done.\r\n");
 	
 	delay_ms(10);
-	//printf("chanEst\r\n");
-	//Print_complex(chanEst);
+	printf("chanEst\r\n");
+	Print_complex(chanEst);
 	Init_int32(&bch_ind, 2);
 	BCHIndices(bch_ind, &ENB);
 	LCD_ShowString(10,210,300,12,12,"BCHIndices Done.");
 	printf("BCHIndices Done.\r\n");
 	
 	delay_ms(10);
-	//printf("bch_ind\r\n");
-	//Print_int32(bch_ind);
+	printf("bch_ind\r\n");
+	Print_int32(bch_ind);
 	
 	for (i = 0; i < chanEst->size[1]; i++) {
 		for (j = 0; j < 240; j++)
@@ -235,7 +322,7 @@ void CellSearch(ARRAY_complex* rxSigFreq)
 	}
 	printf("\r\n");
 	
-	Free_complex(&rxSigFreq);
+	
 	Free_complex(&chanEst);
 	Free_int32(&bch_ind);
 }
