@@ -16,7 +16,7 @@ void main()
 	int a, b;
 	ARRAY_complex* chanEst, * rxSigFreq;
 	ARRAY_int32* bch_ind;
-	double bch_bits[480];
+	FLOAT_TYPE bch_bits[480];
 	struct_complex pbch_symbols[240];
 	int sfmod4;
 	int MIB[24];
@@ -67,26 +67,10 @@ void main()
 		for (i = 0; i < 2016; i++)
 		{
 			if(i<1008)
-				fscanf(fp, "%lf\n", &rxSigFreq->data[i].re);
+				fscanf(fp, "%f\n", &rxSigFreq->data[i].re);
 			else
-				fscanf(fp, "%lf\n", &rxSigFreq->data[i-1008].im);
+				fscanf(fp, "%f\n", &rxSigFreq->data[i-1008].im);
 		}
-		/*for (i = 0; i < 72 * 2; i++)
-		{
-			for (j = 0; j < 14; j++)
-			{
-				if (i < 72)
-				{
-					fscanf(fp, "%lf\n", &rxSigFreq->data[rxSigFreq->size[1] * i + j].re);
-					//printf("%.6lf,\n", rxSigFreq->data[rxSigFreq->size[1] * i + j].re);
-				}
-				else
-				{
-					fscanf(fp, "%lf\n", &rxSigFreq->data[rxSigFreq->size[1] * (i - 72) + j].im);
-					//printf("%.6lf,\n", rxSigFreq->data[rxSigFreq->size[1] * (i - 72) + j].im);
-				}
-			}
-		}*/
 		
 	}
 	fclose(fp);
@@ -96,8 +80,8 @@ void main()
 	/*------------------信道估计-------------------*/
 	Init_complex(&chanEst, 3);
 	ChannelEst(chanEst, rxSigFreq, 0, 0, 0, 0, &ENB);
-	printf("chanEst\n");
-	Print_complex(chanEst);
+	//printf("chanEst\n");
+	//Print_complex(chanEst);
 
 	/*-----------------PBCH解调--------------------*/
 	Init_int32(&bch_ind, 2);

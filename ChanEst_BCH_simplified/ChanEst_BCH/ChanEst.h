@@ -19,10 +19,11 @@
 *说明：无
 *编写者：杨昌林
 *编写日期：2021.02.20
-*版本号：V1.0
+*版本号：V1.1
 *更改历史
-    日期          内容          更改者
-    2021.02.20   V1.0          杨昌林
+*	日期          更改者		内容
+*	2021.02.20   杨昌林		V1.0
+*	2021.03.02   杨昌林		V1.1：宏定义浮点数类型
 ********************************************************************************/
-extern void ChannelEst(ARRAY_complex* TempChan, ARRAY_complex* rcvSigFreq, double mmseA1, \
-    double mmseB1, double mmseA2, double mmseB2, struct_ENB* ENB);
+extern void ChannelEst(ARRAY_complex* TempChan, ARRAY_complex* rcvSigFreq, FLOAT_TYPE mmseA1, \
+    FLOAT_TYPE mmseB1, FLOAT_TYPE mmseA2, FLOAT_TYPE mmseB2, struct_ENB* ENB);

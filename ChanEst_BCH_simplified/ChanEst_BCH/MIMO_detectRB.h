@@ -13,75 +13,79 @@
 *参数：
 * Received：复数，接收信号
 * mimoCH：复数，信道参数
-* Detected：double，检测符号
-* ampd：double，信道幅度信息
+* Detected：FLOAT_TYPE，检测符号
+* ampd：FLOAT_TYPE，信道幅度信息
 *返回值：无
 *说明：无
 *编写者：杨昌林
 *编写日期：2021.02.20
-*版本号：V1.0
+*版本号：V1.1
 *更改历史
-    日期          内容          更改者
-    2021.02.20   V1.0          杨昌林
+*	日期          更改者		内容
+*	2021.02.20   杨昌林		V1.0
+*	2021.03.02   杨昌林		V1.1：宏定义浮点数类型
 ********************************************************************************/
-extern void mrc(struct_complex Detected_RB[240], double ampd[240], const struct_complex RxData[240], const struct_complex equCH[960]);
+extern void mrc(struct_complex Detected_RB[240], FLOAT_TYPE ampd[240], const struct_complex RxData[240], const struct_complex equCH[960]);
 
 /*******************************************************************************
 *功能：SFBC最大似然检测
 *参数：
-* Received：double，接收信号
-* mimoCH：double，信道参数
-* Detected：double，检测符号
-* ampd：double，信道幅度信息
+* Received：FLOAT_TYPE，接收信号
+* mimoCH：FLOAT_TYPE，信道参数
+* Detected：FLOAT_TYPE，检测符号
+* ampd：FLOAT_TYPE，信道幅度信息
 *返回值：无
 *说明：内部调用版
 *编写者：杨昌林
 *编写日期：2021.02.20
-*版本号：V1.0
+*版本号：V1.1
 *更改历史
-    日期          内容          更改者
-    2021.02.20   V1.0          杨昌林
+*	日期          更改者		内容
+*	2021.02.20   杨昌林		V1.0
+*	2021.03.02   杨昌林		V1.1：宏定义浮点数类型
 ********************************************************************************/
-extern void b_mld2sfbc(const double Received[120], const double mimoCH[240],
-    double Detected[120], double ampd[120]);
+extern void b_mld2sfbc(const FLOAT_TYPE Received[120], const FLOAT_TYPE mimoCH[240],
+    FLOAT_TYPE Detected[120], FLOAT_TYPE ampd[120]);
 
 /*******************************************************************************
 *功能：SFBC最大似然检测
 *参数：
 * Received：复数，接收信号
 * mimoCH：复数，信道参数
-* Detected：double，检测符号
-* ampd：double，信道幅度信息
+* Detected：FLOAT_TYPE，检测符号
+* ampd：FLOAT_TYPE，信道幅度信息
 *返回值：无
 *说明：无
 *编写者：杨昌林
 *编写日期：2021.02.20
-*版本号：V1.0
+*版本号：V1.1
 *更改历史
-    日期          内容          更改者
-    2021.02.20   V1.0          杨昌林
+*	日期          更改者		内容
+*	2021.02.20   杨昌林		V1.0
+*	2021.03.02   杨昌林		V1.1：宏定义浮点数类型
 ********************************************************************************/
 extern void mld2sfbc(const struct_complex Received[240], const struct_complex mimoCH[960],
-    double Detected[240], double ampd[240]);
+    FLOAT_TYPE Detected[240], FLOAT_TYPE ampd[240]);
 
 /*******************************************************************************
 *功能：SFBC-FSTD最大似然检测
 *参数：
 * Received：复数，接收信号
 * mimoCH：复数，信道参数
-* Detected：double，检测符号
-* ampd：double，信道幅度信息
+* Detected：FLOAT_TYPE，检测符号
+* ampd：FLOAT_TYPE，信道幅度信息
 *返回值：无
 *说明：无
 *编写者：杨昌林
 *编写日期：2021.02.20
-*版本号：V1.0
+*版本号：V1.1
 *更改历史
-    日期          内容          更改者
-    2021.02.20   V1.0          杨昌林
+*	日期          更改者		内容
+*	2021.02.20   杨昌林		V1.0
+*	2021.03.02   杨昌林		V1.1：宏定义浮点数类型
 ********************************************************************************/
 extern void mld4sfbcfstd(const struct_complex Received[240], const struct_complex mimoCH[960],
-    double Detected[240], double ampd[240]);
+    FLOAT_TYPE Detected[240], FLOAT_TYPE ampd[240]);
 
 
 /*******************************************************************************
@@ -92,15 +96,16 @@ extern void mld4sfbcfstd(const struct_complex Received[240], const struct_comple
 * methodDetect: int，检测算法选择, 整数，0, 1, 2。0：最大比合并或者匹配滤波；1：SFBC的检测；2：SFBC-FSTD的检测
 * mod_mode: int，调制方式, 4, 16, 64
 * Detected_RB: 复数，检测出的符号
-* ampd: double，幅度信息，用于QAM解调
+* ampd: FLOAT_TYPE，幅度信息，用于QAM解调
 *返回值：无
 *说明：由于算法有限，未使用mod_mode，省略。methodDetect为1，2时未经过测试。
 *编写者：杨昌林
 *编写日期：2021.02.20
-*版本号：V1.0
+*版本号：V1.1
 *更改历史
-    日期          内容          更改者
-    2021.02.20   V1.0          杨昌林
+*	日期          更改者		内容
+*	2021.02.20   杨昌林		V1.0
+*	2021.03.02   杨昌林		V1.1：宏定义浮点数类型
 ********************************************************************************/
-extern void MIMO_detectRB(struct_complex Detected_RB[240], double ampd[240], const struct_complex RxData[240], const struct_complex equCH[960], int
+extern void MIMO_detectRB(struct_complex Detected_RB[240], FLOAT_TYPE ampd[240], const struct_complex RxData[240], const struct_complex equCH[960], int
     methodDetect);

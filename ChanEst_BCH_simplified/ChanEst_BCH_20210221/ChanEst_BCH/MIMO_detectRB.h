@@ -1,0 +1,106 @@
+#pragma once
+
+/* Include Files */
+#include <stddef.h>
+#include <stdlib.h>
+#include "typedefs.h"
+#include "Array_Ctrl.h"
+#include <math.h>
+#include <string.h>
+
+/*******************************************************************************
+*功能：最大比合并或者匹配滤波
+*参数：
+* Received：复数，接收信号
+* mimoCH：复数，信道参数
+* Detected：double，检测符号
+* ampd：double，信道幅度信息
+*返回值：无
+*说明：无
+*编写者：杨昌林
+*编写日期：2021.02.20
+*版本号：V1.0
+*更改历史
+    日期          内容          更改者
+    2021.02.20   V1.0          杨昌林
+********************************************************************************/
+extern void mrc(struct_complex Detected_RB[240], double ampd[240], const struct_complex RxData[240], const struct_complex equCH[960]);
+
+/*******************************************************************************
+*功能：SFBC最大似然检测
+*参数：
+* Received：double，接收信号
+* mimoCH：double，信道参数
+* Detected：double，检测符号
+* ampd：double，信道幅度信息
+*返回值：无
+*说明：内部调用版
+*编写者：杨昌林
+*编写日期：2021.02.20
+*版本号：V1.0
+*更改历史
+    日期          内容          更改者
+    2021.02.20   V1.0          杨昌林
+********************************************************************************/
+extern void b_mld2sfbc(const double Received[120], const double mimoCH[240],
+    double Detected[120], double ampd[120]);
+
+/*******************************************************************************
+*功能：SFBC最大似然检测
+*参数：
+* Received：复数，接收信号
+* mimoCH：复数，信道参数
+* Detected：double，检测符号
+* ampd：double，信道幅度信息
+*返回值：无
+*说明：无
+*编写者：杨昌林
+*编写日期：2021.02.20
+*版本号：V1.0
+*更改历史
+    日期          内容          更改者
+    2021.02.20   V1.0          杨昌林
+********************************************************************************/
+extern void mld2sfbc(const struct_complex Received[240], const struct_complex mimoCH[960],
+    double Detected[240], double ampd[240]);
+
+/*******************************************************************************
+*功能：SFBC-FSTD最大似然检测
+*参数：
+* Received：复数，接收信号
+* mimoCH：复数，信道参数
+* Detected：double，检测符号
+* ampd：double，信道幅度信息
+*返回值：无
+*说明：无
+*编写者：杨昌林
+*编写日期：2021.02.20
+*版本号：V1.0
+*更改历史
+    日期          内容          更改者
+    2021.02.20   V1.0          杨昌林
+********************************************************************************/
+extern void mld4sfbcfstd(const struct_complex Received[240], const struct_complex mimoCH[960],
+    double Detected[240], double ampd[240]);
+
+
+/*******************************************************************************
+*功能：相同子帧相同频率的两个资源块内数据的检测
+*参数：
+* RxData: 复数，资源解映射后的接收数据
+* equCH: 复数，等效信道
+* methodDetect: int，检测算法选择, 整数，0, 1, 2。0：最大比合并或者匹配滤波；1：SFBC的检测；2：SFBC-FSTD的检测
+* mod_mode: int，调制方式, 4, 16, 64
+* Detected_RB: 复数，检测出的符号
+* ampd: double，幅度信息，用于QAM解调
+*返回值：无
+*说明：由于算法有限，未使用mod_mode，省略。methodDetect为1，2时未经过测试。
+*编写者：杨昌林
+*编写日期：2021.02.20
+*版本号：V1.0
+*更改历史
+    日期          内容          更改者
+    2021.02.20   V1.0          杨昌林
+********************************************************************************/
+extern void MIMO_detectRB(struct_complex Detected_RB[240], double ampd[240], const struct_complex RxData[240], const struct_complex equCH[960], int
+    methodDetect);
